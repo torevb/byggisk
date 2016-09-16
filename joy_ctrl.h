@@ -8,6 +8,7 @@
 
 #ifndef JOY_CTRL_H_
 #define JOY_CTRL_H_
+
 typedef enum 
 {   LEFT=0,
 	RIGHT=1,
@@ -15,6 +16,9 @@ typedef enum
 	DOWN=3,
 	NEUTRAL=4,
 }joy_direction;
+
+
+
 typedef enum{
 	JOY_Y=4,
 	JOY_X=5,

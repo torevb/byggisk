@@ -1,0 +1,17 @@
+////FARGEKODER//////
+
+Vcc=RAUD
+
+JORD=SVART
+
+ADDRESSE/DATA-BUS=BLÅ
+
+ChipEnable=GUL
+
+Write= GRØN
+
+Read= ORANSJ
+
+Intern kortslutning MAX RS232 =GRÅ
+
+Interrupt = ROSA

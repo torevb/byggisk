@@ -12,18 +12,24 @@
 #include <avr/io.h>
 #include "memory_interface.h"
 
+
 uint8_t read_bus(){
 	DDRA=0x00;//A er input
 	uint8_t position= PORTA;
 	return position;
 }
 
+
+
 uint8_t get_joy_position(ADC_channel adc_ch){
 	memory_init();
 	volatile char *ext_adc = (char *) 0x1400; // Start address for the ADC
 	
+	
+	////connect interruptsignal til pbx. if(PBx=1){}...
+	
 	*ext_adc	= adc_ch;
-	_delay_us(40);
+	_delay_us(40);//delay kan justeres ned til 20 mikro, sidan klokka går på 4915200
 	int8_t position = *ext_adc;
 	
 	return position;
@@ -33,11 +39,42 @@ uint8_t get_joy_position(ADC_channel adc_ch){
 
 
 
-int get_joy_direction(void){
+int get_joy_direction(position_x,position_y){
 	//sammenlign x og y-fortegn og bestem kvadrant.
 	//legg inn rom for neutral f.eks. <20%. 
+	joy_direction x_dir=NEUTRAL;
+	joy_direction y_dir=NEUTRAL;
+	int8_t priority=1; 
 	
-	return 0;
+	if abs(position_x)>abs(position_y){
+		priority=0;
+	}
+	
+	if(~priority){
+		if (position_x>=-20 && position_x<=20){
+		x_dir=NEUTRAL;
+		}
+		else if (position_x>=20){
+			x_dir=RIGHT;
+		}
+		else{
+			x_dir=LEFT;
+		}	
+		return x_dir;
+	}
+	else{
+		if (position_y>=-20 && position_y<=20){
+			y_dir=NEUTRAL;
+		}
+		else if (position_y>=20){
+			y_dir=RIGHT;
+		}
+		else{
+			y_dir=LEFT;
+		}
+		return y_dir;
+	}
+	
 }
 
 int8_t calculate_percentage(int8_t position){

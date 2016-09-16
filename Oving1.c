@@ -50,7 +50,7 @@ int main(void)
 	DDRA=0xFF;
 	PORTA=0x00;
 	PORTE=0x2;
-
+	
 	
 			
     //while(1){
