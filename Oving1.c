@@ -16,6 +16,8 @@
 #include "SRAM_test.h"
 #include "GAL_test.h"
 #include "joy_ctrl.h"
+#include "slide.h"
+#include "OLED.h"
 
 
 
@@ -87,13 +89,32 @@ int main(void)
 	//////////////////////////
 	///////oving3/////////////
 	/////////////////////////
+	//joy_init();
+	//OLED_init();
+	
+	
+	//while(1){
+	//joy_relative_pos();
+	//printf("Position is : %i\n",position);
+	//print_position();
+	
+	//slider_init();
+	//printf("%i, %i\n", slider_right_button(), slider_left_button());
+	//}
+	
+	//////////////////////////
+	///////oving4/////////////
+	/////////////////////////
+	
 	while(1){
-	ADC_channel joy_test= JOY_Y;
-	uint8_t position =get_joy_position(joy_test);
-	printf("Position is : %i\n",position);
-	int percentage= calculate_percentage(position);
-	print_position(42,position);
+		OLED_print("#");
+	
 	}
+	
+	
+	
+	
+	
 	
 	return 0;
 	
