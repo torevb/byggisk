@@ -17,8 +17,6 @@ typedef enum
 	NEUTRAL=4,
 }joy_direction;
 
-
-
 typedef enum{
 	JOY_Y=4,
 	JOY_X=5,
@@ -26,18 +24,22 @@ typedef enum{
 	SLIDE_R=7,
 }ADC_channel;
 
-
-uint8_t read_bus(void);
+struct {
+	int8_t x_pos;
+	int8_t y_pos;
+} rel_position;
 
 uint8_t get_joy_position(ADC_channel adc_ch);
 
-int get_joy_direction(void);
+int get_joy_direction(int position_x, int position_y);
 
 int8_t calculate_percentage(int8_t position);
 
-void print_position(int8_t percentage_x, int8_t percentage_y);
+void print_position(void);
 
+void joy_relative_pos(void);
 
+void joy_init(void);
 
 
 #endif /* JOY_CTRL_H_ */

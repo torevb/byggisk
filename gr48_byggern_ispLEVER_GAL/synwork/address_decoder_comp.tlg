@@ -1,0 +1,3 @@
+@N: CD630 :"C:\isplever_classic2_0\examples\gr48_byggern_isplever_gal\gal_gr48.vhd":6:7:6:21|Synthesizing work.address_decoder.behavioral 
+Post processing for work.address_decoder.behavioral
+@W: CL159 :"C:\isplever_classic2_0\examples\gr48_byggern_isplever_gal\gal_gr48.vhd":11:2:11:3|Input a8 is unused

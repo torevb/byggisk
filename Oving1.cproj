@@ -119,6 +119,9 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="font.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="joy_ctrl.c">
       <SubType>compile</SubType>
     </Compile>
@@ -140,7 +143,19 @@
     <Compile Include="memory_interface.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="OLED.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="OLED.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Oving1.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="slide.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="slide.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="SRAM_test.c">

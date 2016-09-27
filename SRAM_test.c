@@ -19,6 +19,14 @@ typedef unsigned int uint16_t;
 typedef unsigned char uint8_t; 
 
 
+void SRAM_clear(){
+	uint16_t ext_ram_size = 0x800;
+	volatile char *ext_ram = (char *) 0x1800; // Start address for the SRAM
+	for (int i = 0; i < ext_ram_size; i++){
+		ext_ram[i] = 0;
+	}
+}
+
 
 void SRAM_test(void)
 {

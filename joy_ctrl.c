@@ -13,16 +13,32 @@
 #include "memory_interface.h"
 
 
-uint8_t read_bus(){
-	DDRA=0x00;//A er input
-	uint8_t position= PORTA;
-	return position;
+struct {
+	uint8_t x_pos;
+	uint8_t y_pos;
+} null_position;
+
+
+
+
+void joy_init(){
+	memory_init();
+	null_position.x_pos = get_joy_position(JOY_X);
+	null_position.y_pos = get_joy_position(JOY_Y);
+	
+	
+}
+
+void joy_relative_pos(){
+	uint8_t x= get_joy_position(JOY_X);
+	rel_position.x_pos=(int)(x-null_position.x_pos)*100/127;
+	uint8_t y= get_joy_position(JOY_Y);
+	rel_position.y_pos=(int)(y-null_position.y_pos)*100/127;
 }
 
 
-
 uint8_t get_joy_position(ADC_channel adc_ch){
-	memory_init();
+	
 	volatile char *ext_adc = (char *) 0x1400; // Start address for the ADC
 	
 	
@@ -30,7 +46,7 @@ uint8_t get_joy_position(ADC_channel adc_ch){
 	
 	*ext_adc	= adc_ch;
 	_delay_us(40);//delay kan justeres ned til 20 mikro, sidan klokka går på 4915200
-	int8_t position = *ext_adc;
+	uint8_t position = *ext_adc;
 	
 	return position;
 }
@@ -39,14 +55,14 @@ uint8_t get_joy_position(ADC_channel adc_ch){
 
 
 
-int get_joy_direction(position_x,position_y){
+int get_joy_direction(int position_x, int position_y){
 	//sammenlign x og y-fortegn og bestem kvadrant.
 	//legg inn rom for neutral f.eks. <20%. 
 	joy_direction x_dir=NEUTRAL;
 	joy_direction y_dir=NEUTRAL;
 	int8_t priority=1; 
 	
-	if abs(position_x)>abs(position_y){
+	if (abs(position_x)>abs(position_y)){
 		priority=0;
 	}
 	
@@ -84,6 +100,6 @@ int8_t calculate_percentage(int8_t position){
 }
 
 
-void print_position(int8_t percentage_x, int8_t percentage_y){
-	printf("joystick position is: x: %i, y: %i\n", percentage_x, percentage_y);
+void print_position(){
+	printf("joystick position is: x: %i, y: %i\n", rel_position.x_pos, rel_position.y_pos);
 }
