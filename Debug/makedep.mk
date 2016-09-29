@@ -10,6 +10,8 @@ GAL_test.c
 
 memory_interface.c
 
+menu.c
+
 OLED.c
 
 Oving1.c

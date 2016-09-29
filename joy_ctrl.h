@@ -5,16 +5,14 @@
  *  Author: marthauk
  */ 
 
-
-#ifndef JOY_CTRL_H_
-#define JOY_CTRL_H_
+#pragma once
 
 typedef enum 
-{   LEFT=0,
-	RIGHT=1,
-	UP=2,
-	DOWN=3,
-	NEUTRAL=4,
+{   NEUTRAL=0,
+	LEFT=1,
+	RIGHT=2,
+	UP=3,
+	DOWN=4,
 }joy_direction;
 
 typedef enum{
@@ -25,8 +23,8 @@ typedef enum{
 }ADC_channel;
 
 struct {
-	int8_t x_pos;
-	int8_t y_pos;
+	int x_pos;
+	int y_pos;
 } rel_position;
 
 uint8_t get_joy_position(ADC_channel adc_ch);
@@ -41,5 +39,4 @@ void joy_relative_pos(void);
 
 void joy_init(void);
 
-
-#endif /* JOY_CTRL_H_ */
+void print_direction(void);

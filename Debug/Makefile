@@ -41,6 +41,7 @@ C_SRCS +=  \
 ../d_latch_test.c \
 ../GAL_test.c \
 ../memory_interface.c \
+../menu.c \
 ../OLED.c \
 ../Oving1.c \
 ../slide.c \
@@ -59,6 +60,7 @@ joy_ctrl.o \
 d_latch_test.o \
 GAL_test.o \
 memory_interface.o \
+menu.o \
 OLED.o \
 Oving1.o \
 slide.o \
@@ -70,6 +72,7 @@ joy_ctrl.o \
 d_latch_test.o \
 GAL_test.o \
 memory_interface.o \
+menu.o \
 OLED.o \
 Oving1.o \
 slide.o \
@@ -81,6 +84,7 @@ joy_ctrl.d \
 d_latch_test.d \
 GAL_test.d \
 memory_interface.d \
+menu.d \
 OLED.d \
 Oving1.d \
 slide.d \
@@ -92,6 +96,7 @@ joy_ctrl.d \
 d_latch_test.d \
 GAL_test.d \
 memory_interface.d \
+menu.d \
 OLED.d \
 Oving1.d \
 slide.d \
@@ -112,6 +117,8 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+
+
 
 
 

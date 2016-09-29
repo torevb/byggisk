@@ -2,11 +2,17 @@
 
 
 #include "font.h"
+#include <avr/pgmspace.h>
+#include <string.h>
 
 
 
 #define DISPLAY_PAGES		8
 #define DISPLAY_COLUMNS		128
+
+
+static uint8_t current_column;
+static uint8_t current_page;
 
 
 
@@ -25,8 +31,8 @@ void OLED_init()
 	write_OLED_cmd(0x50);
 	write_OLED_cmd(0xd9);        //set  pre-charge  period
 	write_OLED_cmd(0x21);
-	write_OLED_cmd(0x20);        //Set  Memory  Addressing  Mode to horizontal mode.
-	write_OLED_cmd(0x00);
+	write_OLED_cmd(0x20);        //Set  Memory  Addressing  Mode to page mode.
+	write_OLED_cmd(0x02);
 	write_OLED_cmd(0xdb);        //VCOM  deselect  level  mode
 	write_OLED_cmd(0x30);
 	write_OLED_cmd(0xad);        //master  configuration sets external Iref. 
@@ -35,11 +41,12 @@ void OLED_init()
 	write_OLED_cmd(0xa6);        //set  normal  display
 	write_OLED_cmd(0xaf);        //  display  on
 	
+	
 	//write_OLED_cmd(0xA7);		//Inverse display.
 	//write_OLED_cmd(0xA5);		//Output ignores RAM content. 
 	
-	//OLED_reset();
-	//OLED_home();
+	
+	OLED_reset();
 }
 
 
@@ -55,19 +62,17 @@ void write_OLED_data(uint8_t number){
 
 
 void OLED_reset(){
+	write_OLED_cmd(0x40);		//Set display line start at page 0. 
 	for (uint8_t i = 0; i < DISPLAY_PAGES; i++){
-		goto_OLED_page(i);
-		for (uint8_t j = 0; j < DISPLAY_COLUMNS; j++){
-			goto_OLED_column(j);
-			write_OLED_data(0);
-		}
+		clear_OLED_page(i);
 	}
+	OLED_home();
 	return;
 }
 
 void OLED_home(){
 	goto_OLED_page(0);
-	goto_OLED_column(0);
+	goto_OLED_char_column(0);
 	return;
 }
 
@@ -75,16 +80,29 @@ void goto_OLED_page(uint8_t page){
 	if (page >= DISPLAY_PAGES){
 		printf("Error at goto_OLED_page. %ui max input.\n", DISPLAY_PAGES);
 	}
+	current_page = page;
 	write_OLED_cmd(0xB0 + page);
 	return;
 }
 
-void goto_OLED_column(uint8_t column){
-	if (column >= DISPLAY_COLUMNS){
-		printf("Error at goto_OLED_column. %ui max input.\n", DISPLAY_COLUMNS);
-	}
+void goto_OLED_char_column(uint8_t column){
+	uint8_t c = column * font_type.width;
+	uint8_t low_bits = c & 0x0f;
+	uint8_t high_bits = c & 0xf0;
+	write_OLED_cmd(0x00 + low_bits);
+	write_OLED_cmd(0x10 + (high_bits >> 4));
 	
-	//??
+	current_column = column;
+	return;
+}
+
+void goto_OLED_physical_column(uint8_t column){
+	uint8_t low_bits = column & 0x0f;
+	uint8_t high_bits = column & 0xf0;
+	write_OLED_cmd(0x00 + low_bits);
+	write_OLED_cmd(0x10 + (high_bits >> 4));
+	
+	current_column = column;
 	return;
 }
 
@@ -100,29 +118,38 @@ void OLED_pos(uint8_t page, uint8_t column){
 	return;
 }
 
-void print_to_OLED(const char *c){
-	write_OLED_data(0xAA);
-	//write_OLED_data(pgm_read_byte(font + c));
-	//write_OLED_data(pgm_read_word(font + c));
+void print_to_OLED(const char * string, uint8_t start_column){
+	goto_OLED_char_column(start_column);
+	int length = strlen(string);
 	
-	
-	//goto_OLED_page(0);
-	//write_OLED_data(0xFF);
-	
-	/*
-	for (int i = 0; i < 95; i++){
-		if (strcmp_P(c, font[i])){
-			write_OLED_data(*font[i]);
+	for (int i = 0; i < length; i++){
+		char c = string[i];
+		if (c == '\n') {
+			goto_OLED_page(current_page + 1 % DISPLAY_PAGES);
+			goto_OLED_char_column(start_column);
 		}
-	}*/
-	
+		else{
+			for (int j = 0; j < font_type.width; j++){
+				write_OLED_data(pgm_read_byte(font_type.data + (c - font_type.ascii_offset) * font_type.width +j));
+				//write_OLED_data(pgm_read_byte(&font[c-font_type.ascii_offset][j]));
+				//write_OLED_data(pgm_read_byte(&font_type.data[c-font_type.ascii_offset][j]));
+			}
+		}
+	}
+	current_column = start_column + length;
 	return;
 }
 
-
-
-
-
+void OLED_print_arrow (uint8_t page,uint8_t col)
+{	goto_OLED_page(page);
+	goto_OLED_physical_column(col);
+	
+	write_OLED_data(0b00011000);
+	write_OLED_data(0b00011000);
+	write_OLED_data(0b01111110);
+	write_OLED_data(0b00111100);
+	write_OLED_data(0b00011000);
+}
 
 
 

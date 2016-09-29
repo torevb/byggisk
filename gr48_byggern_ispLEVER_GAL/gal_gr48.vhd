@@ -30,8 +30,8 @@ end address_decoder;
 architecture behavioral of address_decoder is
 begin
 	ram_cs <= a11;
-	adc_cs <= a11 or (not a10);
-	oled_cs <= a11 or a10;
-	oled_dc <= not a9;
+	adc_cs <= not ((not a11) and a10);
+	oled_cs <= not ((not a11) and (not a10));
+	oled_dc <=  ((not a11) and (not a10) and (a9));
 end behavioral;
 

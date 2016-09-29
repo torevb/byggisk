@@ -14,10 +14,9 @@
 
 
 struct {
-	uint8_t x_pos;
-	uint8_t y_pos;
+	int x_pos;
+	int y_pos;
 } null_position;
-
 
 
 
@@ -25,34 +24,26 @@ void joy_init(){
 	memory_init();
 	null_position.x_pos = get_joy_position(JOY_X);
 	null_position.y_pos = get_joy_position(JOY_Y);
-	
-	
 }
 
 void joy_relative_pos(){
-	uint8_t x= get_joy_position(JOY_X);
-	rel_position.x_pos=(int)(x-null_position.x_pos)*100/127;
-	uint8_t y= get_joy_position(JOY_Y);
+	int y= get_joy_position(JOY_Y);
 	rel_position.y_pos=(int)(y-null_position.y_pos)*100/127;
+	int x= get_joy_position(JOY_X);
+	rel_position.x_pos=(int)(x-null_position.x_pos)*100/127;
 }
 
 
 uint8_t get_joy_position(ADC_channel adc_ch){
-	
 	volatile char *ext_adc = (char *) 0x1400; // Start address for the ADC
-	
-	
-	////connect interruptsignal til pbx. if(PBx=1){}...
 	
 	*ext_adc	= adc_ch;
 	_delay_us(40);//delay kan justeres ned til 20 mikro, sidan klokka går på 4915200
+	////connect interruptsignal til pbx. if(PBx=1){}...
 	uint8_t position = *ext_adc;
 	
 	return position;
 }
-
-
-
 
 
 int get_joy_direction(int position_x, int position_y){
@@ -66,7 +57,7 @@ int get_joy_direction(int position_x, int position_y){
 		priority=0;
 	}
 	
-	if(~priority){
+	if(! priority){
 		if (position_x>=-20 && position_x<=20){
 		x_dir=NEUTRAL;
 		}
@@ -83,10 +74,10 @@ int get_joy_direction(int position_x, int position_y){
 			y_dir=NEUTRAL;
 		}
 		else if (position_y>=20){
-			y_dir=RIGHT;
+			y_dir=UP;
 		}
 		else{
-			y_dir=LEFT;
+			y_dir=DOWN;
 		}
 		return y_dir;
 	}
@@ -101,5 +92,10 @@ int8_t calculate_percentage(int8_t position){
 
 
 void print_position(){
+	//printf("null_position: %i, %i. uint_position: %i, %i. \n", null_position.x_pos, null_position.y_pos, get_joy_position(JOY_X), get_joy_position(JOY_Y));
 	printf("joystick position is: x: %i, y: %i\n", rel_position.x_pos, rel_position.y_pos);
+}
+
+void print_direction(){
+	printf("Current direction is %i.\n", get_joy_direction(rel_position.x_pos, rel_position.y_pos));
 }

@@ -1,7 +1,7 @@
 #--  Synopsys, Inc.
 #--  Version I-2014.03LC 
-#--  Project file C:\isplever_classic2_0\examples\gr48_byggern_isplever_gal\run_options.txt
-#--  Written on Tue Sep 27 13:54:24 2016
+#--  Project file C:\users\marthauk\desktop\byggisk\byggisk\gr48_byggern_isplever_gal\run_options.txt
+#--  Written on Thu Sep 29 08:59:34 2016
 
 
 #project files
@@ -52,5 +52,5 @@ set_option -write_apr_constraint 1
 project -result_file "./address_decoder.edi"
 
 #set log file 
-set_option log_file "C:/isplever_classic2_0/examples/gr48_byggern_isplever_gal/address_decoder.srf" 
+set_option log_file "C:/users/marthauk/desktop/byggisk/byggisk/gr48_byggern_isplever_gal/address_decoder.srf" 
 impl -active "gr48_byggern_isplever_gal"

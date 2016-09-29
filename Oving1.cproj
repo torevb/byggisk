@@ -143,6 +143,12 @@
     <Compile Include="memory_interface.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="menu.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="menu.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="OLED.c">
       <SubType>compile</SubType>
     </Compile>

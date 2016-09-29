@@ -1,5 +1,5 @@
 #$ TOOL ispLEVER Classic 2.0.00.17.20.15
-#$ DATE Tue Sep 27 13:54:29 2016
+#$ DATE Thu Sep 29 08:59:39 2016
 #$ MODULE address_decoder
 #$ PINS 8 a11:1'ke'  a10:2'ke'  a9:3'ke'  a8:4'ke'  ram_cs:19'ke'  adc_cs:18'ke'  oled_cs:17'ke'  oled_dc:16'ke' 
 
@@ -14,9 +14,11 @@
 1- 1
 -1 1
 00 0
-.names a9.BLIF oled_dc
-0 1
-1 0
+.names a11.BLIF a10.BLIF a9.BLIF oled_dc
+001 1
+-1- 0
+1-- 0
+--0 0
 .names a11.BLIF ram_cs
 1 1
 0 0

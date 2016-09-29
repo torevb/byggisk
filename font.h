@@ -1,11 +1,11 @@
 #pragma once
 
 #include <avr/pgmspace.h>
+#include "OLED.h"
 
 
 
-
-const PROGMEM char font[95][4] = {
+const PROGMEM char font4x6[95][4] = {
 	{0b00000000,0b00000000,0b00000000,0b00000000}, //
 	{0b00000000,0b01011100,0b00000000,0b00000000}, // !
 	{0b00001100,0b00000000,0b00001100,0b00000000}, // "
@@ -102,3 +102,13 @@ const PROGMEM char font[95][4] = {
 	{0b10000100,0b01111000,0b00010000,0b00000000}, // }
 	{0b00001000,0b00000100,0b00001000,0b00000100}, // ~
 };
+
+
+
+void set_font4x6(){
+	font_type.data = font4x6;
+	font_type.width = 4;
+	font_type.height = 6;
+	font_type.ascii_offset = 32;
+}
+

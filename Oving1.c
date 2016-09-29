@@ -19,6 +19,8 @@
 #include "slide.h"
 #include "OLED.h"
 #include "memory_interface.h"
+#include "menu.h"
+//#include "font.h"
 
 
 
@@ -75,10 +77,10 @@ int main(void)
 	
 	//GAL_test();
 	
-	DDRD = 0xFF;
+	//DDRD = 0xFF;
 	
-	PORTD = (1<<PD6);
-	PORTD = (0<<PD7);
+	//PORTD = (1<<PD6);
+	//PORTD = (0<<PD7);
 	
 	//while(1){
 	//	PORTD ^= (1<<PD6);
@@ -94,30 +96,36 @@ int main(void)
 	//OLED_init();
 	
 	
-	//while(1){
-	//joy_relative_pos();
-	//printf("Position is : %i\n",position);
-	//print_position();
+	/*while(1){
+	joy_relative_pos();
+	print_position();
+	print_direction();
 	
 	//slider_init();
 	//printf("%i, %i\n", slider_right_button(), slider_left_button());
-	//}
+	}*/
 	
 	//////////////////////////
 	///////oving4/////////////
 	/////////////////////////
+	
 	memory_init();
 	OLED_init();
-	//printf("begin\n");
-	
-	while(1){
-		print_to_OLED("#");
-	
-	}
+	set_font4x6();
 	
 	
+	goto_OLED_page(0);
+	
+	//print_to_OLED("saaaaa",0);
+	//OLED_print_arrow(0,0);
 	
 	
+	
+
+	menu_init();
+
+
+	menu_print();
 	
 	
 	return 0;

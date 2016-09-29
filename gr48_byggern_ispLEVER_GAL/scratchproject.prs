@@ -1,14 +1,14 @@
 #--  Synopsys, Inc.
 #--  Version I-2014.03LC 
-#--  Project file C:\isplever_classic2_0\examples\gr48_byggern_isplever_gal\scratchproject.prs
+#--  Project file C:\users\marthauk\desktop\byggisk\byggisk\gr48_byggern_isplever_gal\scratchproject.prs
 
 #project files
-add_file -vhdl -lib work "C:/isplever_classic2_0/examples/gr48_byggern_isplever_gal/gal_gr48.vhd"
+add_file -vhdl -lib work "C:/users/marthauk/desktop/byggisk/byggisk/gr48_byggern_isplever_gal/gal_gr48.vhd"
 
 
 
 #implementation: "gr48_byggern_isplever_gal"
-impl -add C:\isplever_classic2_0\examples\gr48_byggern_isplever_gal -type fpga
+impl -add C:\users\marthauk\desktop\byggisk\byggisk\gr48_byggern_isplever_gal -type fpga
 
 #device options
 set_option -technology ispGAL
@@ -47,8 +47,8 @@ set_option -auto_infer_blackbox 0
 set_option -write_apr_constraint 1
 
 #set result format/file last
-project -result_file "C:/isplever_classic2_0/examples/gr48_byggern_isplever_gal/address_decoder.edi"
+project -result_file "C:/users/marthauk/desktop/byggisk/byggisk/gr48_byggern_isplever_gal/address_decoder.edi"
 
 #set log file 
-set_option log_file "C:/isplever_classic2_0/examples/gr48_byggern_isplever_gal/address_decoder.srf" 
+set_option log_file "C:/users/marthauk/desktop/byggisk/byggisk/gr48_byggern_isplever_gal/address_decoder.srf" 
 impl -active "gr48_byggern_isplever_gal"
