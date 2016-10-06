@@ -7,12 +7,13 @@
 
 
 
-#define DISPLAY_PAGES		8
-#define DISPLAY_COLUMNS		128
+
+#define ARROW_WIDTH			8
 
 
-static uint8_t current_column;
-static uint8_t current_page;
+
+uint8_t current_column;
+uint8_t current_page;
 
 
 
@@ -47,6 +48,7 @@ void OLED_init()
 	
 	
 	OLED_reset();
+	set_font4x6();
 }
 
 
@@ -77,11 +79,8 @@ void OLED_home(){
 }
 
 void goto_OLED_page(uint8_t page){
-	if (page >= DISPLAY_PAGES){
-		printf("Error at goto_OLED_page. %ui max input.\n", DISPLAY_PAGES);
-	}
-	current_page = page;
-	write_OLED_cmd(0xB0 + page);
+	current_page = page % DISPLAY_PAGES;
+	write_OLED_cmd(0xB0 + current_page);
 	return;
 }
 
@@ -93,6 +92,21 @@ void goto_OLED_char_column(uint8_t column){
 	write_OLED_cmd(0x10 + (high_bits >> 4));
 	
 	current_column = column;
+	return;
+}
+
+void clear_arrow_space(){
+	int temp_page = current_page;
+	int temp_col = current_column;
+	for (uint8_t j = 0; j < DISPLAY_PAGES; j++){
+		goto_OLED_page(j);
+		for (uint8_t i = 0; i < ARROW_WIDTH; i++){
+			goto_OLED_physical_column(i);
+			write_OLED_data(0);
+		}
+	}
+	current_page = temp_page;
+	current_column = temp_col;
 	return;
 }
 
@@ -114,6 +128,8 @@ void clear_OLED_page(uint8_t page){
 	return;
 }
 
+
+
 void OLED_pos(uint8_t page, uint8_t column){
 	return;
 }
@@ -125,7 +141,7 @@ void print_to_OLED(const char * string, uint8_t start_column){
 	for (int i = 0; i < length; i++){
 		char c = string[i];
 		if (c == '\n') {
-			goto_OLED_page(current_page + 1 % DISPLAY_PAGES);
+			goto_OLED_page((current_page + 1) % DISPLAY_PAGES);
 			goto_OLED_char_column(start_column);
 		}
 		else{
@@ -133,22 +149,26 @@ void print_to_OLED(const char * string, uint8_t start_column){
 				write_OLED_data(pgm_read_byte(font_type.data + (c - font_type.ascii_offset) * font_type.width +j));
 				//write_OLED_data(pgm_read_byte(&font[c-font_type.ascii_offset][j]));
 				//write_OLED_data(pgm_read_byte(&font_type.data[c-font_type.ascii_offset][j]));
+				current_column = current_column + font_type.width;
 			}
 		}
 	}
-	current_column = start_column + length;
 	return;
 }
 
-void OLED_print_arrow (uint8_t page,uint8_t col)
-{	goto_OLED_page(page);
-	goto_OLED_physical_column(col);
+void OLED_print_arrow(uint8_t page)
+{	int temp = current_page;
+	goto_OLED_page(page);
+	goto_OLED_physical_column(1);
 	
 	write_OLED_data(0b00011000);
 	write_OLED_data(0b00011000);
 	write_OLED_data(0b01111110);
 	write_OLED_data(0b00111100);
 	write_OLED_data(0b00011000);
+	current_column = ARROW_WIDTH;
+	
+	goto_OLED_page(temp);
 }
 
 

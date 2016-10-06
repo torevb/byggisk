@@ -29,7 +29,7 @@ struct {
 
 uint8_t get_joy_position(ADC_channel adc_ch);
 
-int get_joy_direction(int position_x, int position_y);
+int get_joy_direction();
 
 int8_t calculate_percentage(int8_t position);
 

@@ -21,7 +21,6 @@ struct {
 
 
 void joy_init(){
-	memory_init();
 	null_position.x_pos = get_joy_position(JOY_X);
 	null_position.y_pos = get_joy_position(JOY_Y);
 }
@@ -46,22 +45,22 @@ uint8_t get_joy_position(ADC_channel adc_ch){
 }
 
 
-int get_joy_direction(int position_x, int position_y){
+int get_joy_direction(){
 	//sammenlign x og y-fortegn og bestem kvadrant.
 	//legg inn rom for neutral f.eks. <20%. 
 	joy_direction x_dir=NEUTRAL;
 	joy_direction y_dir=NEUTRAL;
 	int8_t priority=1; 
 	
-	if (abs(position_x)>abs(position_y)){
+	if (abs(rel_position.x_pos)>abs(rel_position.y_pos)){
 		priority=0;
 	}
 	
 	if(! priority){
-		if (position_x>=-20 && position_x<=20){
+		if (rel_position.x_pos>=-20 && rel_position.x_pos<=20){
 		x_dir=NEUTRAL;
 		}
-		else if (position_x>=20){
+		else if (rel_position.x_pos>=20){
 			x_dir=RIGHT;
 		}
 		else{
@@ -70,10 +69,10 @@ int get_joy_direction(int position_x, int position_y){
 		return x_dir;
 	}
 	else{
-		if (position_y>=-20 && position_y<=20){
+		if (rel_position.y_pos>=-20 && rel_position.y_pos<=20){
 			y_dir=NEUTRAL;
 		}
-		else if (position_y>=20){
+		else if (rel_position.y_pos>=20){
 			y_dir=UP;
 		}
 		else{

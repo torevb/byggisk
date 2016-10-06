@@ -32,19 +32,23 @@ LIB_DEP:=
 LINKER_SCRIPT_DEP:=
 
 # Every subdirectory with source files must be described here
-SUBDIRS := 
+SUBDIRS :=  \
+../CAN\ MCP2515\ header\ files
 
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
+../CAN_driver.c \
 ../joy_ctrl.c \
 ../d_latch_test.c \
 ../GAL_test.c \
+../MCP2515_driver.c \
 ../memory_interface.c \
 ../menu.c \
 ../OLED.c \
 ../Oving1.c \
 ../slide.c \
+../SPI_driver.c \
 ../SRAM_test.c \
 ../uart.c
 
@@ -56,50 +60,62 @@ ASM_SRCS +=
 
 
 OBJS +=  \
+CAN_driver.o \
 joy_ctrl.o \
 d_latch_test.o \
 GAL_test.o \
+MCP2515_driver.o \
 memory_interface.o \
 menu.o \
 OLED.o \
 Oving1.o \
 slide.o \
+SPI_driver.o \
 SRAM_test.o \
 uart.o
 
 OBJS_AS_ARGS +=  \
+CAN_driver.o \
 joy_ctrl.o \
 d_latch_test.o \
 GAL_test.o \
+MCP2515_driver.o \
 memory_interface.o \
 menu.o \
 OLED.o \
 Oving1.o \
 slide.o \
+SPI_driver.o \
 SRAM_test.o \
 uart.o
 
 C_DEPS +=  \
+CAN_driver.d \
 joy_ctrl.d \
 d_latch_test.d \
 GAL_test.d \
+MCP2515_driver.d \
 memory_interface.d \
 menu.d \
 OLED.d \
 Oving1.d \
 slide.d \
+SPI_driver.d \
 SRAM_test.d \
 uart.d
 
 C_DEPS_AS_ARGS +=  \
+CAN_driver.d \
 joy_ctrl.d \
 d_latch_test.d \
 GAL_test.d \
+MCP2515_driver.d \
 memory_interface.d \
 menu.d \
 OLED.d \
 Oving1.d \
 slide.d \
+SPI_driver.d \
 SRAM_test.d \
 uart.d
 
@@ -117,6 +133,12 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+
+
+
+
+
+
 
 
 
