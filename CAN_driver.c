@@ -2,14 +2,11 @@
 #include "MCP2515_driver.h"
 #include "CAN MCP2515 header files\MCP2515.h"
 
-#define TXREQ 3
-#define EXIDE 3
+#include <stdio.h>
+#include <stdlib.h>
+#include <avr/io.h>
 
-struct CAN_struct{
-	char ID;
-	uint8_t length;
-	uint8_t * data[8];
-};
+
 
 void CAN_init(){
 	MCP2515_init();
@@ -48,19 +45,19 @@ void send_CAN_message(struct CAN_struct msg){
 }
 
 
-CAN_struct recv_CAN_message(){
+CAN_struct rcv_CAN_message(){
 	CAN_struct msg;
 	
 	msg.ID=((read_MCP2515(MCP_RXB0SIDH))<<3|((read_MCP2515(MCP_RXB0SIDL))>>5));
 	msg.length=	read_MCP2515(MCP_RXB0_DLC);
-	msg.data
 	
-	/*PUTTING DATA IN DATABUFFER*/
+	
+	/*READING DATA FROM DATABUFFER*/
 	for (int i=0; i < msg.length; i++){
 		msg.data[i]= read_MCP2515(MCP_RXB0_D0+i);
 	}
 	
-	
-	
 	//MUST clear RXB0IF after reading message
+	bit_modify_MCP2515(MCP_CANINTF, 0,0x00);
+	return msg;
 }

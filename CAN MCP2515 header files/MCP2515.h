@@ -22,7 +22,7 @@ Copyright 2003 Kimberly Otten Software Consulting
 #define MCP_TXB0_DLC    0x35
 #define MCP_TXB0_D0     0x36
 
-/*/*Register addresses not included, used for receiving*/*/
+/*/*Register addresses not included, used for receiving*/
 #define MCP_RXB0_DLC 0x65
 
 

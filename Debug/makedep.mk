@@ -4,6 +4,8 @@
 
 CAN_driver.c
 
+CAN_test.c
+
 joy_ctrl.c
 
 d_latch_test.c
