@@ -5,7 +5,9 @@
 
 
 void MCP2515_init(){
+	reset_MCP2515();
 	SPI_master_init();
+	
 }
 
 

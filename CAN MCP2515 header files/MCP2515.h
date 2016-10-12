@@ -13,6 +13,21 @@ v1.00       2003/12/11  Initial release
 Copyright 2003 Kimberly Otten Software Consulting
 */
 
+
+
+/*Register addresses not included, used for sending*/
+
+#define MCP_TXB0_SIDH   0x31
+#define MCP_TXB0_SIDL   0x32
+#define MCP_TXB0_DLC    0x35
+#define MCP_TXB0_D0     0x36
+
+/*/*Register addresses not included, used for receiving*/*/
+#define MCP_RXB0_DLC 0x65
+
+
+
+
 // Define MCP2515 register addresses
 
 #define MCP_RXF0SIDH	0x00
@@ -62,6 +77,8 @@ Copyright 2003 Kimberly Otten Software Consulting
 #define MCP_TXB2CTRL	0x50
 #define MCP_RXB0CTRL	0x60
 #define MCP_RXB0SIDH	0x61
+#define MCP_RXB0SIDL	0x62
+#define MCP_RXB0_D0     0x66
 #define MCP_RXB1CTRL	0x70
 #define MCP_RXB1SIDH	0x71
 

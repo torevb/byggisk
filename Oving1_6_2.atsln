@@ -1,0 +1,20 @@
+
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Atmel Studio Solution File, Format Version 11.00
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "Oving1", "Oving1_6_2.cproj", "{1BE01C74-6B90-4679-BFCD-087254E12632}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|AVR = Debug|AVR
+		Release|AVR = Release|AVR
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1BE01C74-6B90-4679-BFCD-087254E12632}.Debug|AVR.ActiveCfg = Debug|AVR
+		{1BE01C74-6B90-4679-BFCD-087254E12632}.Debug|AVR.Build.0 = Debug|AVR
+		{1BE01C74-6B90-4679-BFCD-087254E12632}.Release|AVR.ActiveCfg = Release|AVR
+		{1BE01C74-6B90-4679-BFCD-087254E12632}.Release|AVR.Build.0 = Release|AVR
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
