@@ -1,6 +1,6 @@
 #include "CAN_driver.h"
 #include "MCP2515_driver.h"
-#include "CAN MCP2515 header files\MCP2515.h"
+#include "MCP2515.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -10,10 +10,9 @@
 
 void CAN_init(){
 	MCP2515_init();
-	//bit_modify_MCP2515(MCP_CANCTRL,0xE0,MODE_LOOPBACK);//Enables loop back mode
 	bit_modify_MCP2515(MCP_CANCTRL,0xE0,MODE_NORMAL);//Enables normal mode
 	bit_modify_MCP2515(0x60, 0b01100000, 0xff);//set filters off
-	bit_modify_MCP2515( 0x60, 0b00000100, 0x00);//set rollover off
+	bit_modify_MCP2515( 0x60, 0b00000100, 0x00);//sett rollover off
 
 	bit_modify_MCP2515(0x2b, 0b00000001, 0xff);//Set RX0 full enable
 	

@@ -3,18 +3,13 @@
 
 #include "SPI_driver.h"
 
+ //uses ATmega 2560
+#define SSn		0
+#define SCK		1
+#define MOSI	2
+#define MISO	3
 
-#ifndef ATmega162
-	#define SSn		4
-	#define MOSI	5
-	#define MISO	6
-	#define SCK		7
-#else //uses ATmega 2560
-	#define SSn		0
-	#define MOSI	2
-	#define MISO	3
-	#define SCK		1
-#endif
+
 
 
 void SPI_master_init(){

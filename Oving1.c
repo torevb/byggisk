@@ -154,11 +154,8 @@ int main(void)
 	
 	memory_init();
 	UART_Init(MYUBRR);
-	SPI_master_init();
 	
-
-	
-	CAN_test();
+	CAN_test_communication();
 	
 	return 0;
 	

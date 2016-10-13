@@ -1,12 +1,12 @@
 #include "MCP2515_driver.h"
 #include "SPI_driver.h"
-#include "CAN MCP2515 header files\MCP2515.h"
+#include "MCP2515.h"
 
 
 
 void MCP2515_init(){
-	SPI_master_init();
-	reset_MCP2515();	
+	reset_MCP2515();
+	SPI_master_init();	
 }
 
 
