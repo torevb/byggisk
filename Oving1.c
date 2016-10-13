@@ -23,7 +23,9 @@
 //#include "font.h"
 #include "SPI_driver.h"
 #include "MCP2515_driver.h"
-
+#include "CAN_test.h"
+#include "CAN_driver.h"
+#include "CAN MCP2515 header files/MCP2515.h"
 
 
 #define BAUD 9600
@@ -142,31 +144,21 @@ int main(void)
 	//////////////////////////
 	///////oving5/////////////
 	/////////////////////////
+	/*while(1){
+	write_MCP2515(MCP_CANCTRL, 'A');
+	printf("shit\n");
+	char temp = read_MCP2515(MCP_CANCTRL);
+	printf("Temp: %i\n", temp);
+	}*/
+	
 	
 	memory_init();
 	UART_Init(MYUBRR);
 	SPI_master_init();
-	printf("A \n");
 	
-	/*
-	send_master_SPI(0xAA);
-	printf("B \n");
-	
-	read_master_SPI();
-	printf("C \n");
-	
-	send_master_SPI(0xA0);
-	printf("B \n");
-	*/
 
 	
-	
-	write_MCP2515(3, 0x25);
-	printf("shit\n");
-	char temp = read_MCP2515(3);
-	printf("Temp: %i\n", temp);
-	
-	
+	CAN_test();
 	
 	return 0;
 	
