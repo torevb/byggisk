@@ -11,7 +11,7 @@
 #include <stdlib.h>
 #include <avr/io.h>
 #include "memory_interface.h"
-
+#include "OLED.h"
 
 struct {
 	int x_pos;
@@ -97,4 +97,79 @@ void print_position(){
 
 void print_direction(){
 	printf("Current direction is %i.\n", get_joy_direction(rel_position.x_pos, rel_position.y_pos));
+}
+
+
+void goto_next_pixel(){
+	joy_direction x_dir=NEUTRAL;
+	joy_direction y_dir=NEUTRAL;
+	if (rel_position.x_pos>=-20 && rel_position.x_pos<=20){
+		x_dir=NEUTRAL;
+	}
+	else if (rel_position.x_pos>=20){
+		x_dir=RIGHT;
+	}
+	else{
+		x_dir=LEFT;
+	}
+	else{
+		if (rel_position.y_pos>=-20 && rel_position.y_pos<=20){
+			y_dir=NEUTRAL;
+		}
+		else if (rel_position.y_pos>=20){
+			y_dir=UP;
+		}
+		else{
+			y_dir=DOWN;
+		}
+	}
+	
+	switch (x_dir):
+	{
+		
+		case NEUTRAL:
+		switch(y_dir):
+			case NEUTRAL:
+			return NEUTRAL;
+			break;
+			case UP:
+			return UP;
+			break;
+			case DOWN:
+			return DOWN;
+			break;
+		break;
+		
+		case LEFT:
+			case NEUTRAL:
+				goto_OLED_physical_column(current_column-1);
+			break;
+			case UP:
+				goto_OLED_page(current_page-1);
+				goto_OLED_physical_column(current_column-1);
+			break;
+			case DOWN:
+				goto_OLED_page(current_page+1);
+				goto_OLED_physical_column(current_column-1);
+			break;
+		break;
+		
+		case RIGHT:
+			case NEUTRAL:
+				goto_OLED_physical_column(current_column+1);
+			break;
+			break;
+			case UP:
+				goto_OLED_page(current_page-1);
+				goto_OLED_physical_column(current_column+1);
+			break;
+			case DOWN:
+				goto_OLED_page(current_page+1);
+				goto_OLED_physical_column(current_column+1);
+			break;
+		break;
+	}
+	
+}
+	
 }

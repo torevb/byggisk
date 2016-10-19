@@ -36,11 +36,12 @@ int8_t get_slider_pos(ADC_channel adc_ch){
 
 
 
-
-int slider_right_button(void){
+/*Used for going back in menu and interrupting processes*/
+int slider_right_button(void){ 
 	return (PIND &(1<<PIND3));
 }
 
+/*Enter-button*/
 int slider_left_button(void){
 	return (PIND &(1<<PIND2));
 }

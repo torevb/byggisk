@@ -4,16 +4,16 @@
 #include "font.h"
 #include <avr/pgmspace.h>
 #include <string.h>
+#include "joy_ctrl.h"
 
 
 
-
-#define ARROW_WIDTH			8
-
+#define ARROW_WIDTH			8 //5 +3 for readability
 
 
-uint8_t current_column;
-uint8_t current_page;
+
+static uint8_t current_column;
+static uint8_t current_page;
 
 
 
@@ -169,6 +169,29 @@ void OLED_print_arrow(uint8_t page)
 	current_column = ARROW_WIDTH;
 	
 	goto_OLED_page(temp);
+}
+
+void OLED_print_square(uint8_t page,uint8_t column){
+	int temp_page = current_page;
+	int temp_column=current_column;
+	goto_OLED_page(page);
+	goto_OLED_physical_column(column);
+	write_OLED_data(0b11111111);
+	write_OLED_data(0b11111111);
+	write_OLED_data(0b11111111);
+	write_OLED_data(0b11111111);
+	current_column=temp_column+4;
+	goto_OLED_page(temp_page);
+	
+}
+
+void draw_OLED(){
+	
+	while(){
+		OLED_print_square(current_page,current_column);
+		_delay_ms(10);
+	}
+	
 }
 
 

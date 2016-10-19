@@ -28,6 +28,7 @@ node root_node;
 node playgame_node;
 node highscore_node;
 node settings_node;
+node draw_node;
 
 node * current_node;
 
@@ -43,6 +44,7 @@ void menu_init(){
 	root_node.children[0] = &playgame_node;
 	root_node.children[1] = &highscore_node;
 	root_node.children[2] = &settings_node;
+	root_node.children[3]= &draw_node;
 	root_node.content_string = "Play game \nHighscores \nSettings\n";
 
 	playgame_node.name = "Back    > Play game < \n";
@@ -65,6 +67,13 @@ void menu_init(){
 		settings_node.children[i]=NULL;
 	}
 	settings_node.content_string = "calibrate_node \nvolume_node \n";
+	
+	draw_node.name = "Drawing board ";
+	draw_node.parent = &root_node;
+	for (int i=0; i<7;i++){
+		draw_node.children[i]=NULL;
+	}
+	draw_node.content_string = draw_OLED();
 	
 	
 	
