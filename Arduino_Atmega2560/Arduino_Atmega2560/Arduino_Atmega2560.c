@@ -9,13 +9,24 @@
 
 
 #define BAUD 9600
-#define FOSC 1000000
+#define FOSC 16000000
 #define MYUBRR FOSC/16/BAUD-1
 
 
 int main(void)
 {
 	UART_Init(MYUBRR);		
-	printf("hei\n");
+	printf("Atmega2560 start.\n");
+	
+	MCP2515_init();
+	
+	/*while (1){
+		write_MCP2515(MCP_CANCTRL, '5');
+		//bit_modify_MCP2515(MCP_CANCTRL, 0xFF, 'A');
+	
+		char temp = read_MCP2515(MCP_CANCTRL);
+		printf("temp: %c\n", temp);
+	} */
+	
 	CAN_test();
 }

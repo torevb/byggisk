@@ -154,8 +154,10 @@ int main(void)
 	
 	memory_init();
 	UART_Init(MYUBRR);
+	printf("Atmega162 start\n");
 	
-	CAN_test_communication();
+	CAN_test();
+	//CAN_test_communication();
 	
 	return 0;
 	

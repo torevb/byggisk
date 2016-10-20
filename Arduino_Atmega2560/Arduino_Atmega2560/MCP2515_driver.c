@@ -5,8 +5,8 @@
 
 
 void MCP2515_init(){
+	SPI_master_init();
 	reset_MCP2515();
-	SPI_master_init();	
 }
 
 
@@ -28,7 +28,6 @@ void write_MCP2515(char write_address, char write_data){
 	send_master_SPI(write_address);
 	send_master_SPI(write_data);
 	spi_chipselect_activate();
-	
 }
 
 void request_to_send_MCP2515(char RTS_in){
