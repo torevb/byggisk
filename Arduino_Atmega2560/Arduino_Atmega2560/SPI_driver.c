@@ -11,7 +11,6 @@
 
 
 
-
 void SPI_master_init(){
 	DDRB |= (1<<MOSI) | (1<<SCK) | (1<<SSn) | (1<<PB0);		//Set MOSI, SCK, SSn output.
 	DDRB &= ~((1<<MISO));		//Set MISO input.

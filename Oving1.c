@@ -157,7 +157,6 @@ int main(void)
 	printf("Atmega162 start\n");
 	
 	CAN_test();
-	//CAN_test_communication();
 	
 	return 0;
 	

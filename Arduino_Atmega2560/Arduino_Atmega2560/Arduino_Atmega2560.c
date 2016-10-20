@@ -20,13 +20,5 @@ int main(void)
 	
 	MCP2515_init();
 	
-	/*while (1){
-		write_MCP2515(MCP_CANCTRL, '5');
-		//bit_modify_MCP2515(MCP_CANCTRL, 0xFF, 'A');
-	
-		char temp = read_MCP2515(MCP_CANCTRL);
-		printf("temp: %c\n", temp);
-	} */
-	
 	CAN_test();
 }
