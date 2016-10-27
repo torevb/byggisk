@@ -27,9 +27,11 @@ void joy_init(){
 
 void joy_relative_pos(){
 	int y= get_joy_position(JOY_Y);
-	rel_position.y_pos=(int)(y-null_position.y_pos)*100/127;
+	//rel_position.y_pos=(int)(y-null_position.y_pos)*100/127;
+	rel_position.y_pos=(int)(y-null_position.y_pos)*99/127;
 	int x= get_joy_position(JOY_X);
-	rel_position.x_pos=(int)(x-null_position.x_pos)*100/127;
+	//rel_position.x_pos=(int)(x-null_position.x_pos)*100/127;
+	rel_position.x_pos=(int)(x-null_position.x_pos)*99/127;
 }
 
 
@@ -99,10 +101,11 @@ void print_direction(){
 	printf("Current direction is %i.\n", get_joy_direction(rel_position.x_pos, rel_position.y_pos));
 }
 
-
+/*
 void goto_next_pixel(){
 	joy_direction x_dir=NEUTRAL;
 	joy_direction y_dir=NEUTRAL;
+
 	if (rel_position.x_pos>=-20 && rel_position.x_pos<=20){
 		x_dir=NEUTRAL;
 	}
@@ -112,23 +115,24 @@ void goto_next_pixel(){
 	else{
 		x_dir=LEFT;
 	}
-	else{
-		if (rel_position.y_pos>=-20 && rel_position.y_pos<=20){
-			y_dir=NEUTRAL;
-		}
-		else if (rel_position.y_pos>=20){
-			y_dir=UP;
-		}
-		else{
-			y_dir=DOWN;
-		}
+
+
+	if (rel_position.y_pos>=-20 && rel_position.y_pos<=20){
+		y_dir=NEUTRAL;
 	}
+	else if (rel_position.y_pos>=20){
+		y_dir=UP;
+	}
+	else{
+		y_dir=DOWN;
+	}
+
 	
-	switch (x_dir):
+	switch (x_dir)
 	{
 		
 		case NEUTRAL:
-		switch(y_dir):
+		switch(y_dir)
 			case NEUTRAL:
 			return NEUTRAL;
 			break;
@@ -173,3 +177,4 @@ void goto_next_pixel(){
 }
 	
 }
+*/

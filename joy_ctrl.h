@@ -15,6 +15,7 @@ typedef enum
 	DOWN=4,
 }joy_direction;
 
+/* Mayhaps we might need to swap x and y. */
 typedef enum{
 	JOY_Y=4,
 	JOY_X=5,

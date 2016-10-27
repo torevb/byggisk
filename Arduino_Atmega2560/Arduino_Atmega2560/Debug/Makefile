@@ -37,11 +37,14 @@ SUBDIRS :=
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
+../adc.c \
 ../Arduino_Atmega2560.c \
 ../CAN_driver.c \
 ../CAN_test.c \
+../ir_led.c \
 ../MCP2515_driver.c \
 ../memory_interface.c \
+../pwm.c \
 ../SPI_driver.c \
 ../uart.c
 
@@ -53,38 +56,50 @@ ASM_SRCS +=
 
 
 OBJS +=  \
+adc.o \
 Arduino_Atmega2560.o \
 CAN_driver.o \
 CAN_test.o \
+ir_led.o \
 MCP2515_driver.o \
 memory_interface.o \
+pwm.o \
 SPI_driver.o \
 uart.o
 
 OBJS_AS_ARGS +=  \
+adc.o \
 Arduino_Atmega2560.o \
 CAN_driver.o \
 CAN_test.o \
+ir_led.o \
 MCP2515_driver.o \
 memory_interface.o \
+pwm.o \
 SPI_driver.o \
 uart.o
 
 C_DEPS +=  \
+adc.d \
 Arduino_Atmega2560.d \
 CAN_driver.d \
 CAN_test.d \
+ir_led.d \
 MCP2515_driver.d \
 memory_interface.d \
+pwm.d \
 SPI_driver.d \
 uart.d
 
 C_DEPS_AS_ARGS +=  \
+adc.d \
 Arduino_Atmega2560.d \
 CAN_driver.d \
 CAN_test.d \
+ir_led.d \
 MCP2515_driver.d \
 memory_interface.d \
+pwm.d \
 SPI_driver.d \
 uart.d
 
@@ -102,6 +117,12 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+
+
+
+
+
+
 
 
 

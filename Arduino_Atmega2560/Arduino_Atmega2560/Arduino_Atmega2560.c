@@ -6,6 +6,13 @@
 #include "CAN_test.h"
 #include "MCP2515.h"
 #include <stdio.h>
+#include "pwm.h"
+#include "ir_led.h"
+
+
+#define F_CPU 16000000UL  //for <util/delay.h>
+#include <util/delay.h> //for _delay_ms()
+
 
 
 #define BAUD 9600
@@ -13,12 +20,49 @@
 #define MYUBRR FOSC/16/BAUD-1
 
 
+
+void test_pwm_duty();
+
+
+
 int main(void)
 {
 	UART_Init(MYUBRR);		
 	printf("Atmega2560 start.\n");
 	
-	MCP2515_init();
+	//CAN_test();
 	
-	CAN_test();
+	//test_pwm_duty();
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	return 0;
+}
+
+
+
+
+
+
+void test_pwm_duty(){
+	pwm_init();
+	CAN_init();
+	CAN_struct joyfull;
+	
+	while (1){
+		joyfull = rcv_CAN_message();
+		/*for (int i = 0; i < joyfull.length; i++){
+			int8_t test =  joyfull.data[i];
+			printf("joyfull.data[i]: %i\n", test);
+		}*/
+		set_pwm_duty_cycle(joyfull.data[0]);
+		printf("pwm duty: %i\n", OCR1A);
+	}
 }

@@ -7,7 +7,7 @@ typedef struct CAN_struct CAN_struct;
 struct CAN_struct{
 	char ID;
 	uint8_t length;
-	uint8_t * data[8];
+	int8_t * data[8];
 };
 
 void CAN_init();

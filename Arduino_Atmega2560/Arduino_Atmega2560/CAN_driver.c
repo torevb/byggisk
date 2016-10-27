@@ -46,14 +46,12 @@ void send_CAN_message(struct CAN_struct msg){
 
 
 CAN_struct rcv_CAN_message(){
-	printf("MCP_RXB0CTRL: %x\n", read_MCP2515(MCP_RXB0CTRL));
 	CAN_struct msg;
 	
 	while (!(read_MCP2515(MCP_CANINTF) & (1<<RX0IF))) {} //wait for interrupt
 	
 	msg.ID=((read_MCP2515(MCP_RXB0SIDH))<<3|((read_MCP2515(MCP_RXB0SIDL))>>5));
 	msg.length=	(int)(read_MCP2515(MCP_RXB0_DLC) & 0x0f);
-	printf(" Message length %i:\n",msg.length);
 	
 	/*READING DATA FROM DATABUFFER*/
 	for (int i=0; i < msg.length; i++){

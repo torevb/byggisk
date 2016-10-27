@@ -156,7 +156,25 @@ int main(void)
 	UART_Init(MYUBRR);
 	printf("Atmega162 start\n");
 	
-	CAN_test();
+	//CAN_test();
+	
+	joy_init();
+	CAN_init();
+	
+	CAN_struct joyfull;
+	joyfull.ID = 1;
+	joyfull.length = 1;
+	
+	
+	while(1){
+		joy_relative_pos();
+		int trudeluu = rel_position.x_pos;
+		joyfull.data[0] = trudeluu;
+		printf("joy_pos: %i\n", trudeluu);
+		send_CAN_message(joyfull);
+		
+	}
+	
 	
 	return 0;
 	
