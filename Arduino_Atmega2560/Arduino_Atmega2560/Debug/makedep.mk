@@ -10,7 +10,9 @@ CAN_driver.c
 
 CAN_test.c
 
-ir_led.c
+ir_receiver.c
+
+motor.c
 
 MCP2515_driver.c
 
@@ -18,7 +20,11 @@ memory_interface.c
 
 pwm.c
 
+scoretable.c
+
 SPI_driver.c
+
+TWI_Master.c
 
 uart.c
 

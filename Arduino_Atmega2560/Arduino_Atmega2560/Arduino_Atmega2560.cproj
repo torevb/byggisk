@@ -142,10 +142,16 @@
     <Compile Include="CAN_test.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="ir_led.c">
+    <Compile Include="ir_receiver.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="ir_led.h">
+    <Compile Include="ir_receiver.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="motor.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="motor.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="MCP2515.h">
@@ -169,10 +175,22 @@
     <Compile Include="pwm.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="scoretable.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="scoretable.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="SPI_driver.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="SPI_driver.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="TWI_Master.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="TWI_Master.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="uart.c">

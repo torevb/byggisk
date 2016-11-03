@@ -7,7 +7,9 @@
 #include "MCP2515.h"
 #include <stdio.h>
 #include "pwm.h"
-#include "ir_led.h"
+#include "ir_receiver.h"
+#include "scoretable.h"
+#include "motor.h"
 
 
 #define F_CPU 16000000UL  //for <util/delay.h>
@@ -29,11 +31,25 @@ int main(void)
 {
 	UART_Init(MYUBRR);		
 	printf("Atmega2560 start.\n");
+	ir_init();
+	motor_init();
+	while(1){
+		_delay_ms(300);
+		send_motor_speed();
+		
+	}
+
 	
 	//CAN_test();
 	
 	//test_pwm_duty();
 	
+	
+	//int out=255;
+	//while(1){
+	//	printf("Score : %i \n",score_count());
+	//}
+
 	
 	
 	
@@ -54,6 +70,7 @@ int main(void)
 void test_pwm_duty(){
 	pwm_init();
 	CAN_init();
+
 	CAN_struct joyfull;
 	
 	while (1){
@@ -63,6 +80,7 @@ void test_pwm_duty(){
 			printf("joyfull.data[i]: %i\n", test);
 		}*/
 		set_pwm_duty_cycle(joyfull.data[0]);
+		printf("joyfull.data[0]: %x\n", joyfull.data[0]);
 		printf("pwm duty: %i\n", OCR1A);
 	}
 }

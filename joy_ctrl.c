@@ -13,12 +13,13 @@
 #include "memory_interface.h"
 #include "OLED.h"
 
+#define JOY_NEUTRAL 20
+#define JOY_MAX 100
+
 struct {
 	int x_pos;
 	int y_pos;
 } null_position;
-
-
 
 void joy_init(){
 	null_position.x_pos = get_joy_position(JOY_X);
@@ -28,10 +29,10 @@ void joy_init(){
 void joy_relative_pos(){
 	int y= get_joy_position(JOY_Y);
 	//rel_position.y_pos=(int)(y-null_position.y_pos)*100/127;
-	rel_position.y_pos=(int)(y-null_position.y_pos)*99/127;
+	rel_position.y_pos=(int)(y-null_position.y_pos)*(JOY_MAX-1)/127;
 	int x= get_joy_position(JOY_X);
 	//rel_position.x_pos=(int)(x-null_position.x_pos)*100/127;
-	rel_position.x_pos=(int)(x-null_position.x_pos)*99/127;
+	rel_position.x_pos=(int)(x-null_position.x_pos)*(JOY_MAX-1)/127;
 }
 
 
@@ -59,10 +60,10 @@ int get_joy_direction(){
 	}
 	
 	if(! priority){
-		if (rel_position.x_pos>=-20 && rel_position.x_pos<=20){
+		if (rel_position.x_pos>=-JOY_NEUTRAL && rel_position.x_pos<=JOY_NEUTRAL){
 		x_dir=NEUTRAL;
 		}
-		else if (rel_position.x_pos>=20){
+		else if (rel_position.x_pos>=JOY_NEUTRAL){
 			x_dir=RIGHT;
 		}
 		else{
@@ -71,10 +72,10 @@ int get_joy_direction(){
 		return x_dir;
 	}
 	else{
-		if (rel_position.y_pos>=-20 && rel_position.y_pos<=20){
+		if (rel_position.y_pos>=-JOY_NEUTRAL && rel_position.y_pos<=JOY_NEUTRAL){
 			y_dir=NEUTRAL;
 		}
-		else if (rel_position.y_pos>=20){
+		else if (rel_position.y_pos>=JOY_NEUTRAL){
 			y_dir=UP;
 		}
 		else{

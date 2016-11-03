@@ -170,8 +170,9 @@ int main(void)
 		joy_relative_pos();
 		int trudeluu = rel_position.x_pos;
 		joyfull.data[0] = trudeluu;
-		printf("joy_pos: %i\n", trudeluu);
+		
 		send_CAN_message(joyfull);
+		
 		
 	}
 	

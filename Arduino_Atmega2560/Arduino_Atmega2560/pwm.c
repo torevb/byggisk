@@ -7,7 +7,9 @@
 #define TIMER1_PERIOD 1249		//20 ms with prescaler 256. 
 #define DUTY_CYCLE_CENTER 94 //(TIMER1_PERIOD*(15/200))	//1,5 ms OF 20 ms. (94)
 #define DUTY_CONVERT_FACTOR 2.8	//An input of +/- 100 gives approximately +/- 37 output
-
+#define DUTY_MAX 37
+#define JOY_NEUTRAL 20
+#define JOY_MAX 100
 
 void pwm_init(){
 	/* Set period to 20 ms. */
@@ -37,18 +39,36 @@ void pwm_init(){
 	TCCR1B |= (1<<CS12);
 }
 
+//void set_pwm_duty_cycle(int8_t input_joy_position){
+	//if ((input_joy_position <= JOY_MAX) && (input_joy_position >= -JOY_MAX)){
+		//OCR1A = DUTY_CYCLE_CENTER - (input_joy_position / DUTY_CONVERT_FACTOR);
+	//}
+	//else if (input_joy_position >= JOY_MAX){
+		//OCR1A = DUTY_CYCLE_CENTER - 37;
+	//}
+	//else if (input_joy_position <= -JOY_MAX){
+		//OCR1A = DUTY_CYCLE_CENTER + 37;
+	//}
+	//else {	//never occurs.
+		//OCR1A = DUTY_CYCLE_CENTER;
+	//}
+//}
+
 void set_pwm_duty_cycle(int8_t input_joy_position){
-	if ((input_joy_position <= 100) && (input_joy_position >= -100)){
-		OCR1A = DUTY_CYCLE_CENTER + (input_joy_position / DUTY_CONVERT_FACTOR);
+	//forslag: stabiliser output til servo. Hopper litt pga små justeringer +/- 2 i joy_position. 
+	if (input_joy_position >= JOY_MAX){
+		OCR1A = DUTY_CYCLE_CENTER - DUTY_MAX;
 	}
-	else if (input_joy_position >= 100){
-		OCR1A = DUTY_CYCLE_CENTER + 37;
+	else if (input_joy_position <= -JOY_MAX){
+		OCR1A = DUTY_CYCLE_CENTER + DUTY_MAX;
 	}
-	else if (input_joy_position <= -100){
-		OCR1A = DUTY_CYCLE_CENTER - 37;
+	else if (input_joy_position >= JOY_NEUTRAL){
+		OCR1A = DUTY_CYCLE_CENTER - (input_joy_position / DUTY_CONVERT_FACTOR);
 	}
-	else {	//never occurs.
+	else if (input_joy_position <= -JOY_NEUTRAL){
+		OCR1A = DUTY_CYCLE_CENTER - (input_joy_position / DUTY_CONVERT_FACTOR);
+	}
+	else {
 		OCR1A = DUTY_CYCLE_CENTER;
 	}
 }
-
