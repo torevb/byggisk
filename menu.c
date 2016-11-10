@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <avr/interrupt.h>
+#include "solenoid.h"
 
 #include "OLED.h"
 #include "joy_ctrl.h"
@@ -37,7 +38,7 @@ uint8_t arrow_page;
 
 
 void menu_init(){
-
+	OLED_init();
 	
 	root_node.name = "        > Main menu < \n";
 	root_node.parent = &root_node;
@@ -73,11 +74,11 @@ void menu_init(){
 	for (int i=0; i<7;i++){
 		draw_node.children[i]=NULL;
 	}
-	draw_node.content_string = draw_OLED();
+	//draw_node.content_string = draw_OLED();
 	
 	
 	
-	current_node = &root_node;
+	current_node = &playgame_node;//&root_node;
 	arrow_page = 0;
 }
 
@@ -95,13 +96,18 @@ void menu_arrow(){
 
 /* Left slider button, INT0_vect, pin PD2. Right slider button, INT1_vect, pin PD3.*/
 ISR(INT0_vect){//, INT1_vect){
-	if (arrow_page <= 0){
-		current_node = current_node->parent;
-	} else if (!(current_node->children[arrow_page - 1] == NULL)){
-		current_node = current_node->children[arrow_page -1];
+	if (current_node == &playgame_node){
+		push_solenoid();
 	}
-	arrow_page = 0;
-	menu_print();
+	else{
+		if (arrow_page <= 0){
+			current_node = current_node->parent;
+			} else if (!(current_node->children[arrow_page - 1] == NULL)){
+			current_node = current_node->children[arrow_page -1];
+		}
+		arrow_page = 0;
+		menu_print();
+	}
 }
 
 ISR(INT1_vect){

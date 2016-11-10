@@ -24,6 +24,8 @@ Oving1.c
 
 slide.c
 
+solenoid.c
+
 SPI_driver.c
 
 SRAM_test.c

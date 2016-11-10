@@ -49,6 +49,7 @@ C_SRCS +=  \
 ../OLED.c \
 ../Oving1.c \
 ../slide.c \
+../solenoid.c \
 ../SPI_driver.c \
 ../SRAM_test.c \
 ../uart.c
@@ -72,6 +73,7 @@ menu.o \
 OLED.o \
 Oving1.o \
 slide.o \
+solenoid.o \
 SPI_driver.o \
 SRAM_test.o \
 uart.o
@@ -88,6 +90,7 @@ menu.o \
 OLED.o \
 Oving1.o \
 slide.o \
+solenoid.o \
 SPI_driver.o \
 SRAM_test.o \
 uart.o
@@ -104,6 +107,7 @@ menu.d \
 OLED.d \
 Oving1.d \
 slide.d \
+solenoid.d \
 SPI_driver.d \
 SRAM_test.d \
 uart.d
@@ -120,6 +124,7 @@ menu.d \
 OLED.d \
 Oving1.d \
 slide.d \
+solenoid.d \
 SPI_driver.d \
 SRAM_test.d \
 uart.d
@@ -138,6 +143,8 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+
+
 
 
 

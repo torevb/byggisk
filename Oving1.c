@@ -157,23 +157,30 @@ int main(void)
 	printf("Atmega162 start\n");
 	
 	//CAN_test();
-	
+	/*
 	joy_init();
 	CAN_init();
 	
 	CAN_struct joyfull;
 	joyfull.ID = 1;
 	joyfull.length = 1;
+	*/
 	
+	slider_init();
+	menu_init();
 	
 	while(1){
+		/*
 		joy_relative_pos();
 		int trudeluu = rel_position.x_pos;
 		joyfull.data[0] = trudeluu;
+		printf("Sending this data : %i\n",joyfull.data[0]);
 		
 		send_CAN_message(joyfull);
+		*/
 		
 		
+				
 	}
 	
 	

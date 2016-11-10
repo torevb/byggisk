@@ -1,6 +1,7 @@
 #include "pwm.h"
 
 #include <avr/io.h>
+#include "uart.h"
 
 
 
@@ -56,6 +57,7 @@ void pwm_init(){
 
 void set_pwm_duty_cycle(int8_t input_joy_position){
 	//forslag: stabiliser output til servo. Hopper litt pga små justeringer +/- 2 i joy_position. 
+	printf("Position %i \n", input_joy_position);
 	if (input_joy_position >= JOY_MAX){
 		OCR1A = DUTY_CYCLE_CENTER - DUTY_MAX;
 	}

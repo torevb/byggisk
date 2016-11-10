@@ -18,6 +18,8 @@ MCP2515_driver.c
 
 memory_interface.c
 
+pid.c
+
 pwm.c
 
 scoretable.c

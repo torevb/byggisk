@@ -45,6 +45,7 @@ C_SRCS +=  \
 ../motor.c \
 ../MCP2515_driver.c \
 ../memory_interface.c \
+../pid.c \
 ../pwm.c \
 ../scoretable.c \
 ../SPI_driver.c \
@@ -67,6 +68,7 @@ ir_receiver.o \
 motor.o \
 MCP2515_driver.o \
 memory_interface.o \
+pid.o \
 pwm.o \
 scoretable.o \
 SPI_driver.o \
@@ -82,6 +84,7 @@ ir_receiver.o \
 motor.o \
 MCP2515_driver.o \
 memory_interface.o \
+pid.o \
 pwm.o \
 scoretable.o \
 SPI_driver.o \
@@ -97,6 +100,7 @@ ir_receiver.d \
 motor.d \
 MCP2515_driver.d \
 memory_interface.d \
+pid.d \
 pwm.d \
 scoretable.d \
 SPI_driver.d \
@@ -112,6 +116,7 @@ ir_receiver.d \
 motor.d \
 MCP2515_driver.d \
 memory_interface.d \
+pid.d \
 pwm.d \
 scoretable.d \
 SPI_driver.d \
@@ -132,6 +137,8 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+
+
 
 
 

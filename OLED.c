@@ -185,9 +185,10 @@ void OLED_print_square(uint8_t page,uint8_t column){
 	
 }
 
+
 void draw_OLED(){
 	
-	while(){
+	while(1){
 		OLED_print_square(current_page,current_column);
 		_delay_ms(10);
 	}

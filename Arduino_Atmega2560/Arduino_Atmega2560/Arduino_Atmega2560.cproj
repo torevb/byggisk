@@ -169,6 +169,12 @@
     <Compile Include="memory_interface.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="pid.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="pid.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="pwm.c">
       <SubType>compile</SubType>
     </Compile>
@@ -179,6 +185,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="scoretable.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="solenoid.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="solenoid.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="SPI_driver.c">
