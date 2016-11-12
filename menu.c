@@ -8,15 +8,8 @@
 
 #include "OLED.h"
 #include "joy_ctrl.h"
+#include "CAN_driver.h"
 
-
-
-/*struct node{
-	struct node * parent;
-	struct node * children;
-	char * name;
-	char * content_string;
-} ;*/
 
 typedef struct node{
 	struct node * parent;
@@ -76,8 +69,6 @@ void menu_init(){
 	}
 	//draw_node.content_string = draw_OLED();
 	
-	
-	
 	current_node = &playgame_node;//&root_node;
 	arrow_page = 0;
 }
@@ -96,20 +87,29 @@ void menu_arrow(){
 
 /* Left slider button, INT0_vect, pin PD2. Right slider button, INT1_vect, pin PD3.*/
 ISR(INT0_vect){//, INT1_vect){
-	if (current_node == &playgame_node){
-		push_solenoid();
-	}
-	else{
+	//if (current_node == &playgame_node){
+		CAN_struct solenoide_push;
+		solenoide_push.ID= SOLENOIDE_PUSH_ID;
+		solenoide_push.data[0]=0;
+		solenoide_push.length=1;
+		printf("Sending following message :\n ID: %i \n data: %i\n length %i",solenoide_push.ID,solenoide_push.data[0],solenoide_push.length);
+		send_CAN_message(solenoide_push);
+		
+		
+		//push_solenoid();
+	//}
+	/*else{
 		if (arrow_page <= 0){
-			current_node = current_node->parent;
-			} else if (!(current_node->children[arrow_page - 1] == NULL)){
+			//current_node = current_node->parent;
+		} else if (!(current_node->children[arrow_page - 1] == NULL)){
 			current_node = current_node->children[arrow_page -1];
 		}
 		arrow_page = 0;
 		menu_print();
-	}
+	}*/
 }
 
+/*Used for going backwards/upwards in menu*/
 ISR(INT1_vect){
 	current_node = current_node->parent;
 	menu_print();

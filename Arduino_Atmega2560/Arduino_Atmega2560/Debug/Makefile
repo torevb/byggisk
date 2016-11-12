@@ -48,6 +48,7 @@ C_SRCS +=  \
 ../pid.c \
 ../pwm.c \
 ../scoretable.c \
+../solenoid.c \
 ../SPI_driver.c \
 ../TWI_Master.c \
 ../uart.c
@@ -71,6 +72,7 @@ memory_interface.o \
 pid.o \
 pwm.o \
 scoretable.o \
+solenoid.o \
 SPI_driver.o \
 TWI_Master.o \
 uart.o
@@ -87,6 +89,7 @@ memory_interface.o \
 pid.o \
 pwm.o \
 scoretable.o \
+solenoid.o \
 SPI_driver.o \
 TWI_Master.o \
 uart.o
@@ -103,6 +106,7 @@ memory_interface.d \
 pid.d \
 pwm.d \
 scoretable.d \
+solenoid.d \
 SPI_driver.d \
 TWI_Master.d \
 uart.d
@@ -119,6 +123,7 @@ memory_interface.d \
 pid.d \
 pwm.d \
 scoretable.d \
+solenoid.d \
 SPI_driver.d \
 TWI_Master.d \
 uart.d
@@ -137,6 +142,8 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+
+
 
 
 

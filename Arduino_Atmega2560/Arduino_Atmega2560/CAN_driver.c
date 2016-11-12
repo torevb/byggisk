@@ -2,6 +2,7 @@
 #include "MCP2515_driver.h"
 #include "MCP2515.h"
 
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <avr/io.h>
@@ -53,6 +54,7 @@ CAN_struct rcv_CAN_message(){
 	msg.ID=((read_MCP2515(MCP_RXB0SIDH))<<3|((read_MCP2515(MCP_RXB0SIDL))>>5));
 	msg.length=	(int)(read_MCP2515(MCP_RXB0_DLC) & 0x0f);
 	
+	
 	/*READING DATA FROM DATABUFFER*/
 	for (int i=0; i < msg.length; i++){
 		msg.data[i]= read_MCP2515(MCP_RXB0_D0+i);
@@ -60,6 +62,7 @@ CAN_struct rcv_CAN_message(){
 		
 	//MUST clear RXB0IF after reading message
 	bit_modify_MCP2515(MCP_CANINTF, (1<<RX0IF), 0x00);
-	
+		
 	return msg;
+
 }

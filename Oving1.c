@@ -1,9 +1,4 @@
-/*
- * Oving1.c
- *
- * Created: 01.09.2016 08:28:15
- *  Author: marthauk
- */ 
+
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -35,152 +30,46 @@
 
 int main(void)
 {	
-	//ov1////////////////////////////////
-	
-	//UART_Init(MYUBRR);
-	//DDRD=0x01;
-	//PORTD=0x01;
-	//UART_Transmit(10);
-	
-	 //while(1){
-		 //	PORTD ^= (1 << PD0);
-		 //for (int i=0;i<1000;i++){
-		 //}
-		 //int test = 0;
-		 //printf("hei, %i", test);
-		 //unsigned char c=UART_Receive();
-		 //UART_Transmit(c);
-	 //}
-	
-	
-	//ov2////////////////////////////////
-	
 	DDRE=0x3;
 	DDRA=0xFF;
 	PORTA=0x00;
 	PORTE=0x2;
 	
 	
-			
-    //while(1){
-		////for (int i=0;i<1000;i++){
-		////}
-		//_delay_ms(1000);
-		//PORTE|=(1<<PE1);
-		//PORTA^=(1<<PA0);
-		//PORTA^=(1<<PA1);
-		//
-    //}
-	
-	
-	
-	//PORTE|=(1<<PE1);
-	//PORTA|=(1<<PA0);
-	//PORTA|=(1<<PA1);
-	//SRAM_test();
-	
-	//GAL_test();
-	
-	//DDRD = 0xFF;
-	
-	//PORTD = (1<<PD6);
-	//PORTD = (0<<PD7);
-	
-	//while(1){
-	//	PORTD ^= (1<<PD6);
-	//	_delay_ms(1000);
-	//	PORTD ^= (1<<PD7);
-		
-	//}
-	
-	//////////////////////////
-	///////oving3/////////////
-	/////////////////////////
-	//joy_init();
-	//OLED_init();
-	
-	
-	/*while(1){
-	joy_relative_pos();
-	print_position();
-	print_direction();
-	
-	//slider_init();
-	//printf("%i, %i\n", slider_right_button(), slider_left_button());
-	}*/
-	
-	//////////////////////////
-	///////oving4/////////////
-	/////////////////////////
-	/*
-	memory_init();
-	UART_Init(MYUBRR);
-	joy_init();
-	
-	OLED_init();
-	//set_font4x6();
-	slider_init();
-	
-	
-	goto_OLED_page(0);
-	
-	//print_to_OLED("saaaaa",0);
-	//OLED_print_arrow(0,0);
-	
-	
-	
-
-	menu_init();
-
-
-	menu_print();
-	while (1){
-		_delay_ms(500);
-		joy_relative_pos();
-		//print_direction();
-		menu_arrow();
-	}
-	*/
-	//////////////////////////
-	///////oving5/////////////
-	/////////////////////////
-	/*while(1){
-	write_MCP2515(MCP_CANCTRL, 'A');
-	printf("shit\n");
-	char temp = read_MCP2515(MCP_CANCTRL);
-	printf("Temp: %i\n", temp);
-	}*/
-	
 	
 	memory_init();
 	UART_Init(MYUBRR);
 	printf("Atmega162 start\n");
 	
-	//CAN_test();
-	/*
-	joy_init();
 	CAN_init();
-	
-	CAN_struct joyfull;
-	joyfull.ID = 1;
-	joyfull.length = 1;
-	*/
-	
 	slider_init();
+	//solenoid_init();
 	menu_init();
-	
+	joy_init();
+	menu_print();
+	CAN_struct slidemsg;
+	slidemsg.ID=SLIDER_ID;
 	while(1){
-		/*
-		joy_relative_pos();
+		/*joy_relative_pos();
 		int trudeluu = rel_position.x_pos;
+		
 		joyfull.data[0] = trudeluu;
+		joyfull.length=1;
 		printf("Sending this data : %i\n",joyfull.data[0]);
 		
 		send_CAN_message(joyfull);
+		
 		*/
+		//uint8_t sliderpos=get_slider_pos(SLIDE_L);
+		//printf("Sliderpos: %i\n",sliderpos);
+	
+		slidemsg.data[0] = get_slider_pos(SLIDE_L);
+		slidemsg.length=1;
+		printf("Sending this data : %i\n",slidemsg.data[0]);
 		
+		send_CAN_message(slidemsg);
 		
-				
+			
 	}
 	
 	

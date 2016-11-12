@@ -24,6 +24,8 @@ pwm.c
 
 scoretable.c
 
+solenoid.c
+
 SPI_driver.c
 
 TWI_Master.c

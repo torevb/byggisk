@@ -58,14 +58,14 @@ int16_t read_encoder_input(){
 
 //int joy_samples[5] = {0,0,0,0,0};
 
-void send_motor_speed(){
+void send_motor_speed(CAN_struct rcv_msg_joy){
 	/*Send to MJ1 on motor box*/
 	//PINH|=(1<<EN); // enable MJ1
 	
 	//int joy_average = 0;
 	
 	/*read joystick position-> send to motor*/
-	CAN_struct rcv_msg_joy = rcv_CAN_message();
+	//CAN_struct rcv_msg_joy = rcv_CAN_message();
 	
 	//joy_samples[0] = rcv_msg_joy.data[0];
 	
@@ -82,33 +82,34 @@ void send_motor_speed(){
 	*/
 	
 	
-	
-	/*Message for TWI format*/
-	int8_t messageBuf[4];
+	if(rcv_msg_joy.ID==SLIDER_ID){/*SLIDER_data from 0-255*/
+		/*Message for TWI format*/
+		int8_t messageBuf[4];
 
-	int16_t motor_strength=rcv_msg_joy.data[0];
-	//printf("Motor strength %i,\n",motor_strength);
-	//printf("Position %i \n", rcv_msg_joy.data[0]);
-	/*Send via TWI*/
-	/*MAX520 DAC address is 00. Setting Read byte to 0. */
-	messageBuf[0]=TWI_DAC_SLAVE_ADDR + 0;		//DAC address + readBit
-	messageBuf[1] = 0x00;             // The first byte is used for commands.
-	/*Need to set direction for the motor. Set DIR on MJ1 DIR->PH1*/
-	
-	PORTH|=(1<< DIR);
-	if (motor_strength<130){ /*Get drops down to 0 in DIR anyways*/
-		motor_strength=motor_strength; 
-	}
-	else{
+		int16_t motor_strength=rcv_msg_joy.data[0];
 		
-		PORTH&=~(1<<DIR);
-		motor_strength= abs(motor_strength-255);// to scale 
+		//printf("Motor strength %i,\n",motor_strength);
+		//printf("Position %i \n", rcv_msg_joy.data[0]);
+		/*Send via TWI*/
+		/*MAX520 DAC address is 00. Setting Read byte to 0. */
+		messageBuf[0]=TWI_DAC_SLAVE_ADDR + 0;		//DAC address + readBit
+		messageBuf[1] = 0x00;             // The first byte is used for commands.
+		/*Need to set direction for the motor. Set DIR on MJ1 DIR->PH1*/
+	
+		PORTH|=(1<< DIR);
+		if (motor_strength<130){ /*Get drops down to 0 in DIR anyways*/
+			motor_strength=motor_strength; 
+		}
+		else{
+		
+			PORTH&=~(1<<DIR);
+			motor_strength= abs(motor_strength-130);// to scale 
+		}
+		messageBuf[2] =motor_strength;                         // The second byte is used for the data.
+		//printf("Motor strength %i,\n",motor_strength);
+		TWI_Start_Transceiver_With_Data(messageBuf,3);
+	
 	}
-	messageBuf[2] =motor_strength;                         // The second byte is used for the data.
-	//printf("Motor strength %i,\n",motor_strength);
-	TWI_Start_Transceiver_With_Data(messageBuf,3);
-	
-	
 }
 
 void set_motor_speed(int16_t input_speed){

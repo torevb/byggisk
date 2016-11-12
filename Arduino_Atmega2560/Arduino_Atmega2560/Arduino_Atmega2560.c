@@ -32,12 +32,22 @@ int main(void)
 	UART_Init(MYUBRR);		
 	printf("Atmega2560 start.\n");
 	//ir_init();
+	CAN_init();
 	motor_init();
+	solenoid_init();
+	
 	//printf("HAllo1\n");
 	//calibrate_encoder();
 	
+	
+	CAN_struct msg;
 	while(1){
-		send_motor_speed();
+		msg =rcv_CAN_message();
+		if (msg.ID==SOLENOIDE_PUSH_ID){
+			push_solenoid();
+		}
+		printf("Received ID: %i\n Received data: %i \n",msg.ID,msg.data[0]);
+		send_motor_speed(msg);
 		//_delay_ms(6000);
 		//read_encoder_input();
 		
