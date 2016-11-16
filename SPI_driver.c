@@ -17,7 +17,7 @@
 #endif
 
 
-void SPI_master_init(){
+void SPI_init(){
 	DDRB |= (1<<MOSI) | (1<<SCK) | (1<<SSn);		//Set MOSI, SCK, SSn output.
 	DDRB &= ~((1<<MISO));		//Set MISO input.
 	PORTB|=(1<<MISO);
@@ -25,13 +25,8 @@ void SPI_master_init(){
 	//PINB &= !(1<<PB4);
 }
 
-void SPI_slave_init(){
-	DDRB |= (1<<MISO);	//Set as output.
-	DDRB &= ~((1<<MOSI)|(1<<SCK)|(1<<SSn)); //Set as input.
-	SPCR = (1<<SPE);	//Enable SPI.
-}
 
-void send_master_SPI(char data){
+void send_SPI(char data){
 	
 	SPDR = data;			//Send data.
 	while (!(SPSR & (1<<SPIF))) {}		//Wait for transmission complete.
@@ -52,19 +47,6 @@ void spi_chipselect_activate(){
 
 void spi_chipselect_deactivate(){
 	PORTB &=~(1<<SSn);
-}
-
-void send_slave_SPI(){
-	
-}
-
-char read_slave_SPI(){
-	PORTB &=~(1<<SSn);
-	//send dummy byte for å dytte utpå datapakke.
-	while (!(SPSR & (1<<SPIF))) {}
-	return SPDR;
-	PORTB |=(1<<SSn);
-	
 }
 
 
