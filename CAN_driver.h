@@ -2,11 +2,15 @@
 #include <stdint.h>
 #define TXREQ 3
 #define EXIDE 3
+#define MLOA 5
 
 /*CAN IDs*/
-#define JOYSTICK_ID			0
-#define SOLENOIDE_PUSH_ID	1
-#define SLIDER_ID			2
+#define	HIGHSCORE_ID		0
+#define JOYSTICK_ID			1
+#define SOLENOIDE_PUSH_ID	2
+#define SLIDER_ID			3
+
+
 typedef struct CAN_struct CAN_struct;
 struct CAN_struct{
 	char ID;
