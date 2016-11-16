@@ -33,10 +33,8 @@ void send_SPI(char data){
 	
 }
 
-char read_master_SPI(){
-	
-	
-	send_master_SPI(0xFF);		//Send dummy byte.		
+char read_SPI(){	
+	send_SPI(0xFF);		//Send dummy byte.		
 	while (!(SPSR & (1<<SPIF))) {}		//Wait for transmission complete.
 	return SPDR;
 }
