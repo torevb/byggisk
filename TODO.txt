@@ -1,0 +1,27 @@
+*******Atmega162*******
+main + navn
+meny og undermenyer (playgame -> in-game) (highscore) (settings -> calibrate, osv?)
+interrupt vektorer inni menu.c? må fikse fra solenoidetesting til generell interrupt.
+"back" fra både øverst og fra "escape-knapp"?
+joystick fra 0 til 100 eller fra 100 til 100?
+_delay diverse steder ok? blokkerer jo koden fra videre kjøring. 
+bruke sram til noe? f.eks. highscore, record gameplay, osv.
+kjøre diverse tester for gamle, ferdige ting. f.eks. sram test. f.eks. bruke inni if(DEBUG). legg dem i egen mappe, hvertfall.
+spi.c: fjern master fra navn. fjern slavefunksjoner.
+init-funksjoner: prøv å inkluder alt nødvendig for å kjøre inni init. f.eks. can_init inneholder mcp_init som inneholder spi_init. bra. kanskje ha en main_init eller game_init for DDRE og DDRA hvis disse skal brukes?
+main kjører game() funksjon.
+fjerne uart og printf. legg disse i if(DEBUG) e.l.. hvis noe er ønsket printet, bør det heller printes til oled. 
+meny-node med draw.
+score: optimaliser slik at vi ikke venter 3 sek før print på oled. flytt _delay etter print, f.eks. printen er bare for å hindre multi-score på en hendelse. 
+CAN interrupt for å sende score tilbake til oled? interrupt/timeout havner isåfall på atmega162 sin side. 
+
+funksjon i font.h burde flyttes til font.c for ryddighet?
+mappestruktur + #includes.
+
+
+*******Arduino 2560*******
+pid? burke encoder data til noe?
+fjerne memory_interface.
+CAN interrupt for å sende score tilbake til oled? interrupt/timeout havner isåfall på atmega162 sin side. 
+spi:fjern master fra funksjonsnavn. fjerne slavefunksjoner.
+lag scorefunksjon som gir mening. f.eks. slipp inn minst mulig mål på en viss tid. husk å legge inn for treg restart etter et mål. 
