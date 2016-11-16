@@ -11,22 +11,6 @@
 #include "CAN_driver.h"
 
 
-typedef struct node{
-	struct node * parent;
-	struct node * children[7];
-	char * name;
-	char * content_string;
-}node;
-
-node root_node;
-node playgame_node;
-node highscore_node;
-node settings_node;
-node draw_node;
-node ingame_node;
-node calibrate_joy_node;
-
-node * current_node;
 
 uint8_t arrow_page;
 
@@ -127,7 +111,11 @@ void menu_print(){
 	OLED_reset();
 	print_to_OLED(current_node->name, 2);
 	print_to_OLED(current_node->content_string, 2);
-	OLED_print_arrow(arrow_page);
+	if ((current_node != &ingame_node) | (current_node != &draw_node)){
+		OLED_print_arrow(arrow_page);
+	}
 }
 
-
+void menu_print_score(uint8_t score){
+	
+}
