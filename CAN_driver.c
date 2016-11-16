@@ -23,7 +23,7 @@ void CAN_init(){
 }
 
 void send_CAN_message(struct CAN_struct msg){
-	while (read_MCP2515(MCP_TXB0CTRL) & (1<<TXREQ)){//will be cleared when finished
+	while (read_MCP2515(MCP_TXB0CTRL) & (1<<TXREQ)){
 		//wait until finished transmitting
 	}
 
