@@ -57,7 +57,7 @@ void menu_init(){
 	ingame_node.name = "         > In-game < \n";
 	ingame_node.parent = &playgame_node;
 	for (int i=0; i<7;i++){ ingame_node.children[i] = NULL; }
-	ingame_node.content_string = "Current score: \n";
+	ingame_node.content_string = "\nCurrent score: \n";
 	
 	
 	current_node = &playgame_node;//&root_node;
@@ -91,7 +91,7 @@ ISR(INT0_vect){//, INT1_vect){
 	}
 	else{	//This means we are in normal menu mode.
 		if (arrow_page <= 0){
-			//current_node = current_node->parent;
+			current_node = current_node->parent;
 		} else if (!(current_node->children[arrow_page - 1] == NULL)){
 			current_node = current_node->children[arrow_page -1];
 		}
@@ -116,6 +116,12 @@ void menu_print(){
 	}
 }
 
-void menu_print_score(uint8_t score){
-	
+//Call when in-game.
+void menu_score(uint8_t score){
+	goto_OLED_page(2);
+	//goto_OLED_page(3);
+	char string[10];
+	sprintf(string, "%i", score);
+	//string = score + '0';
+	print_to_OLED(string, 15);
 }
