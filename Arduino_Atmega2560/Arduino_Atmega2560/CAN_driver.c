@@ -46,23 +46,30 @@ void send_CAN_message(struct CAN_struct msg){
 }
 
 
-CAN_struct rcv_CAN_message(){
-	CAN_struct msg;
+void rcv_CAN_message(CAN_struct * msg){
 	
+	msg->data[0] = 0;
+	msg->ID = 0;
+	msg->length = 0;
+	
+	//memset(&msg, 0, sizeof(CAN_struct));
 	while (!(read_MCP2515(MCP_CANINTF) & (1<<RX0IF))) {} //wait for interrupt
 	
-	msg.ID=((read_MCP2515(MCP_RXB0SIDH))<<3|((read_MCP2515(MCP_RXB0SIDL))>>5));
-	msg.length=	(int)(read_MCP2515(MCP_RXB0_DLC) & 0x0f);
+	msg->ID=((read_MCP2515(MCP_RXB0SIDH))<<3|((read_MCP2515(MCP_RXB0SIDL))>>5));
+	//printf("Message ID in receive-function%i\n", *msg_ID);
+	msg->length=	(int)(read_MCP2515(MCP_RXB0_DLC) & 0x0f);
 	
 	
 	/*READING DATA FROM DATABUFFER*/
-	for (int i=0; i < msg.length; i++){
-		msg.data[i]= read_MCP2515(MCP_RXB0_D0+i);
+	for (int i=0; i < msg->length; i++){
+		msg->data[i]= read_MCP2515(MCP_RXB0_D0+i);
 	}
-		
+	
 	//MUST clear RXB0IF after reading message
 	bit_modify_MCP2515(MCP_CANINTF, (1<<RX0IF), 0x00);
+
+	//printf("Message ID,data and length in receive-function %u , %d, %u \n", msg->ID,msg->data[0],msg->length);
 		
-	return msg;
+	//return msg;
 
 }

@@ -3,24 +3,37 @@
 #include <stdint.h>
 
 
-#define Kp	-1.15
+#define Kp	-0.8//-1.15
 #define Ki	0.05
 #define Kd	0.01
 
-int n =0;
-#define ERROR_SIZE 100
+int previousError=0;
 
 
-void speed_regulator(int16_t input_joy){
+uint8_t speed_regulator(int8_t input_joy, int *t){
 	//p, i?
-	n++;
-	int16_t motor_pos=read_encoder_input();
-	int e[ERROR_SIZE]={0};
-	/*100 used for time*/
-	int16_t e[n]= motor_pos/100- abs(input_joy); 
 	
+	int8_t motor_pos=read_encoder_input();
+	float e=0;
+	if(abs(input_joy)<10){
+		
+	}
 	
+	e= motor_pos/(*t/(10^3))- abs(input_joy); 
 	
+	float P = Kp*e;
+	float integrateError=e+previousError;
+	
+	float I=Ki*(*t/(10^3))*integrateError;
+	previousError=e;
+	
+	if (motor_pos!=0){
+		*t=0;
+		}
+		
+		
+		
+	return P+I;
 }
 
 

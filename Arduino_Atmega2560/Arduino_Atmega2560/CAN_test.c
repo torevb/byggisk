@@ -21,14 +21,14 @@ void CAN_test(){
 	*/
 	//bit_modify_MCP2515(MCP_CANCTRL,0xE0,MODE_LOOPBACK);//Enables loop back mode
 	
-	while (1){
+	/*while (1){
 		//send_CAN_message(msg);
 	
 		_delay_ms(2000);
-		CAN_struct rcv_msg= rcv_CAN_message();
+		//CAN_struct rcv_msg= rcv_CAN_message();
 		
-		for (int j=0;j<rcv_msg.length;j++){
-			printf("Data in received message : %c \n", (char) rcv_msg.data[j]);
+		//for (int j=0;j<rcv_msg.length;j++){
+			//printf("Data in received message : %c \n", (char) rcv_msg.data[j]);
 		}
-	}
+	}*/
 }

@@ -44,7 +44,7 @@ int16_t read_encoder_input(){
 	PORTH|=(1<<SEL);
 	_delay_ms(20); //delay about 20 ms
 	
-	//printf("Motor encoder data : %i\n",motor_encoder_data);
+	printf("Motor encoder data : %i\n",motor_encoder_data);
 	motor_encoder_data|= (PINK&0xFF); // read MSB
 	
 	PORTH&=~(1<<RSTn);//Toggle reset to start counting again
@@ -58,7 +58,7 @@ int16_t read_encoder_input(){
 
 //int joy_samples[5] = {0,0,0,0,0};
 
-void send_motor_speed(CAN_struct rcv_msg_joy){
+void send_motor_speed(uint8_t speed_data){
 	/*Send to MJ1 on motor box*/
 	//PINH|=(1<<EN); // enable MJ1
 	
@@ -86,7 +86,7 @@ void send_motor_speed(CAN_struct rcv_msg_joy){
 		/*Message for TWI format*/
 		int8_t messageBuf[4];
 
-		int16_t motor_strength=rcv_msg_joy.data[0];
+		uint8_t motor_strength=speed_data;
 		
 		//printf("Motor strength %i,\n",motor_strength);
 		//printf("Position %i \n", rcv_msg_joy.data[0]);
@@ -96,22 +96,32 @@ void send_motor_speed(CAN_struct rcv_msg_joy){
 		messageBuf[1] = 0x00;             // The first byte is used for commands.
 		/*Need to set direction for the motor. Set DIR on MJ1 DIR->PH1*/
 	
-		PORTH|=(1<< DIR);
-		if (motor_strength<130){ /*Get drops down to 0 in DIR anyways*/
-			motor_strength=motor_strength; 
-		}
-		else{
+		//PORTH|=(1<< DIR);
+		//if (motor_strength<130){ /*Get drops down to 0 in DIR anyways*/
+		//	motor_strength=motor_strength; 
+		//}
+		//else{
 		
-			PORTH&=~(1<<DIR);
-			motor_strength= abs(motor_strength-255);// to scale 
-		}
+			//PORTH&=~(1<<DIR);
+		//	motor_strength= abs(motor_strength-255);// to scale 
+	//	}
 		messageBuf[2] =motor_strength;                         // The second byte is used for the data.
 		//printf("Motor strength %i,\n",motor_strength);
 		TWI_Start_Transceiver_With_Data(messageBuf,3);
 	
 	//}
 }
-
+void set_motor_dir(int8_t input_joy){
+	if (input_joy>0){
+			PORTH|=(1<< DIR);
+	}
+	else{
+		PORTH&=~(1<<DIR);
+	}
+	
+	
+	
+}
 void set_motor_speed(int16_t input_speed){
 	/*Message for TWI format*/
 	int8_t messageBuf[4];

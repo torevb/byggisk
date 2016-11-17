@@ -18,7 +18,7 @@ struct CAN_struct{
 
 void CAN_init();
 void send_CAN_message(struct CAN_struct msg);
-CAN_struct rcv_CAN_message();
+void rcv_CAN_message(CAN_struct * msg);
 
 
 
