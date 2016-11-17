@@ -20,6 +20,8 @@ node settings_node;
 node draw_node;
 node ingame_node;
 node calibrate_joy_node;
+node howto_node;
+node info_node;
 
 node * current_node;
 
