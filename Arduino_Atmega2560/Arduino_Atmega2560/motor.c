@@ -44,14 +44,14 @@ int16_t read_encoder_input(){
 	PORTH|=(1<<SEL);
 	_delay_ms(20); //delay about 20 ms
 	
-	printf("Motor encoder data : %i\n",motor_encoder_data);
+	//printf("Motor encoder data : %i\n",motor_encoder_data);
 	motor_encoder_data|= (PINK&0xFF); // read MSB
 	
 	PORTH&=~(1<<RSTn);//Toggle reset to start counting again
 	_delay_ms(5); //delay about 20 ms
 	PORTH|=(1<<RSTn)|(1<<OEn);//disable output from encoder
 
-	if (motor_encoder_data != 0) {printf("Motor encoder data : %i\n", motor_encoder_data);}
+	//if (motor_encoder_data != 0) {printf("Motor encoder data : %i\n", motor_encoder_data);}
 		
 	return motor_encoder_data;	
 }

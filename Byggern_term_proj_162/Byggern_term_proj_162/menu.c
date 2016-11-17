@@ -12,10 +12,6 @@
 
 
 
-//#define DEBUG 0
-
-
-
 uint8_t arrow_page;
 
 
@@ -26,19 +22,13 @@ void menu_init(){
 	root_node.name = "        > Main menu < \n";
 	root_node.parent = &root_node;
 	for (int i=0; i<7;i++){ root_node.children[i] = NULL; }
-	root_node.children[0] = &playgame_node;
+	root_node.children[0] = &ingame_node;
 	root_node.children[1] = &highscore_node;
 	root_node.children[2] = &settings_node;
 	root_node.children[3] = &draw_node;
 	root_node.children[4] = &info_node;
+	root_node.children[5] = &howto_node;
 	root_node.content_string = "Play Ping-Pong game \nHighscores \nSettings \nDraw a doodle \nInfo \n";
-
-	playgame_node.name = "Back    > New game < \n";
-	playgame_node.parent = &root_node;
-	for (int i=0; i<7;i++){ playgame_node.children[i] = NULL; }
-	playgame_node.children[0] = &ingame_node; 
-	playgame_node.children[1] = &howto_node;
-	playgame_node.content_string = "Play game \n";	
 
 	highscore_node.name = "Back     > Highscore < \n";
 	highscore_node.parent = &root_node;
@@ -61,62 +51,57 @@ void menu_init(){
 	calibrate_joy_node.content_string = "Reset axis offset \nIncrease neutral zone \nDecrease neutral zone \n";
 	
 	ingame_node.name = "         > In-game < \n";
-	ingame_node.parent = &playgame_node;
+	ingame_node.parent = &root_node;
 	for (int i=0; i<7;i++){ ingame_node.children[i] = NULL; }
 	ingame_node.content_string = "\nCurrent score: \n";
 	
 	howto_node.name = "Back     > How to play < \n";
-	howto_node.parent = &playgame_node;
+	howto_node.parent = &root_node;
 	for (int i=0; i<7;i++){ howto_node.children[i] = NULL; }
 	howto_node.content_string = "Use joystick to control motor. \nUse left button to push the ball. \nUse left slider to control servo. \n\n";
 	
 	info_node.name = "Back     > Info < \n";
 	info_node.parent = &root_node;
 	for (int i=0; i<7;i++){ info_node.children[i] = NULL; }
-	info_node.content_string = "Use joystick up/down to navigate. \nUse left button to select. \nUse right button to return to previous\n menu at any time. \n";
+	info_node.content_string = "*Use joystick up/down to\n navigate. \n*Use left button to select. \n*Use right button to return\n to previous menu at any\n time. \n";
 	
 	
-	//current_node = &info_node;
-	current_node =&ingame_node;//&root_node; //&playgame_node;//
-	arrow_page = 1;
+	current_node = &root_node; 
+	//current_node =&ingame_node;////&playgame_node;//&info_node;
+	arrow_page = 0;
 }
 
-/*
-void hovedsak_utkast(){
-	//playgame();   menu_print();		while(current_node == &ingame_node){}
-	//drawgame();	menu_print();		while(current_node == &draw_node){}
-	menu_arrow();
-	menu_print();	//unødvendig, pga inni både playgame og drawgame. Men kan være lettere å lese koden. 
-}*/
 
 void menu_arrow(){
 	clear_arrow_space();
+	joy_relative_pos();
 	int direction = get_joy_direction();
 	if (direction == 0){
 	} else if (direction == 3){
-		arrow_page = arrow_page -1 % DISPLAY_PAGES;
+		arrow_page = (arrow_page -1) % DISPLAY_PAGES;
 	} else if (direction == 4){
-		arrow_page = arrow_page +1 % DISPLAY_PAGES;
+		arrow_page = (arrow_page +1) % DISPLAY_PAGES;
 	}
 	OLED_print_arrow(arrow_page);
 }
 
 /* Left slider button, INT0_vect, pin PD2. Right slider button, INT1_vect, pin PD3.*/
 ISR(INT0_vect){//, INT1_vect){
-	if (DEBUG) { printf("Button interrupt.\n");}
+	printf("Button interrupt.\n");
 	
 	if (current_node == &ingame_node){
 		CAN_struct solenoide_push;
 		solenoide_push.ID= SOLENOIDE_PUSH_ID;
 		solenoide_push.data[0]=0;
 		solenoide_push.length=1;
-		if (DEBUG) { printf("Sending following message :\n ID: %i \n data: %i\n length %i",solenoide_push.ID,solenoide_push.data[0],solenoide_push.length); }
+		// printf("Sending following message :\n ID: %i \n data: %i\n length %i",solenoide_push.ID,solenoide_push.data[0],solenoide_push.length);
 		send_CAN_message(solenoide_push);
 		
 		
 		//push_solenoid();
 	}
-	else if (current_node == &draw_node){	
+	else if (current_node == &draw_node){
+		OLED_reset();	
 	}
 	else{	//This means we are in normal menu mode.
 		if (arrow_page <= 0){
@@ -124,13 +109,14 @@ ISR(INT0_vect){//, INT1_vect){
 		} else if (!(current_node->children[arrow_page - 1] == NULL)){
 			current_node = current_node->children[arrow_page -1];
 		}
-		arrow_page = 1;
+		arrow_page = 0;
 		menu_print();
 	}
 }
 
 /*Used for going backwards/upwards in menu*/
 ISR(INT1_vect){
+	printf("Button interrupt.\n");
 	current_node = current_node->parent;
 	menu_print();
 }
@@ -154,3 +140,4 @@ void menu_score(uint8_t score){
 	//string = score + '0';
 	print_to_OLED(string, 15);
 }
+

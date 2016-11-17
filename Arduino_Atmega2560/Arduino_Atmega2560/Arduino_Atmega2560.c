@@ -41,10 +41,8 @@ int main(void)
 	
 	
 	CAN_struct msg;
-	int timekeeper=0;
-	while(1){
-		timekeeper++;
 	
+	while(1){
 		rcv_CAN_message(&msg);
 		//printf("Received ID: %i\n Received data: %i \n",msg.ID,msg.data[0]);
 		if (msg.ID==SOLENOIDE_PUSH_ID){
@@ -53,17 +51,16 @@ int main(void)
 		}
 		if (msg.ID==JOYSTICK_ID){
 			int8_t temp_joy= msg.data[0];
-			printf("tjohey\n");
+			//printf("tjohey\n");
 			set_motor_dir(temp_joy);
-			uint8_t regulated_speed=speed_regulator(temp_joy,&timekeeper);
+			uint8_t regulated_speed=speed_regulator(temp_joy, 0.01);
 			//printf("speed %i\n", regulated_speed);
 			send_motor_speed(regulated_speed);
-			//timekeeper=0;
 			
 		}
 		
 		//printf("time: %i\n", timekeeper);
-		//_delay_ms(6000);
+		_delay_ms(10);
 		//read_encoder_input();
 		
 	}

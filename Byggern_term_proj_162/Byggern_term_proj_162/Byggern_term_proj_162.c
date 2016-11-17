@@ -41,16 +41,17 @@ int main(void)
 	
 	game_init();	//Includes all inits necessary to be able to play the game and navigate in menu
 
-	play_game();
+	//play_game();
+	menu_print();
 	
-	/*
 	while(1){
-		play_game();  //menu_print(); while(current_node == &ingame_node){ }
-		//draw_game();  //menu_print(); while(current_node == &draw_node){ }
 		menu_arrow();
-		menu_print();
+		
+		//play_game();  //menu_print(); while(current_node == &ingame_node){ }
+		draw_game();  //menu_print(); while(current_node == &draw_node){ }
+		_delay_ms(400);
 	}
-	*/
+	
 	
 	
 	

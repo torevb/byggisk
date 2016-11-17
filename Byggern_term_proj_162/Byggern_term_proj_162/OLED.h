@@ -47,3 +47,7 @@ void print_to_OLED(const char * string, uint8_t start_column);
 void OLED_print_arrow (uint8_t page);
 
 void OLED_print_square(uint8_t page,uint8_t column);
+
+void draw_OLED();
+
+void goto_next_pixel();

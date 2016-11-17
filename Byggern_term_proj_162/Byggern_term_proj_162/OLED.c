@@ -172,29 +172,65 @@ void OLED_print_arrow(uint8_t page)
 }
 
 void OLED_print_square(uint8_t page,uint8_t column){
-	int temp_page = current_page;
-	int temp_column=current_column;
+//	int temp_page = current_page;
+//	int temp_column=current_column;
 	goto_OLED_page(page);
 	goto_OLED_physical_column(column);
 	write_OLED_data(0b11111111);
 	write_OLED_data(0b11111111);
 	write_OLED_data(0b11111111);
 	write_OLED_data(0b11111111);
-	current_column=temp_column+4;
-	goto_OLED_page(temp_page);
-	
+//	current_column=temp_column + font_type.width;
+//	goto_OLED_page(temp_page);
 }
 
 
 void draw_OLED(){
 	
-	while(1){
-		OLED_print_square(current_page,current_column);
-		_delay_ms(10);
-	}
+	goto_next_pixel();
 	
+	/*
+	prev_x = prev_x + (rel_position.x_pos % 127);
+	prev_y = prev_y + (rel_position.y_pos % 8);
+	*/
+	
+	//get_joy_direction();
+	
+	
+	OLED_print_square(current_page, current_column);
 }
 
+void goto_next_pixel(){
+	joy_relative_pos();
+	
+	joy_direction x_dir=NEUTRAL;
+	joy_direction y_dir=NEUTRAL;
+
+	if (rel_position.x_pos>=-20 && rel_position.x_pos<=20){
+		x_dir=NEUTRAL;
+	}
+	else if (rel_position.x_pos>=20){
+		x_dir=RIGHT;
+		goto_OLED_physical_column(current_column+1);
+	}
+	else{
+		x_dir=LEFT;
+		goto_OLED_physical_column(current_column-1);
+	}
+
+
+	if (rel_position.y_pos>=-20 && rel_position.y_pos<=20){
+		y_dir=NEUTRAL;
+	}
+	else if (rel_position.y_pos>=20){
+		y_dir=UP;
+		goto_OLED_page(current_page-1);
+	}
+	else{
+		y_dir=DOWN;
+		goto_OLED_page(current_page+1);
+	}
+}
 
 
 

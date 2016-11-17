@@ -27,8 +27,9 @@ void game_init(){
 	memory_init();
 	CAN_init();
 	slider_init();	
-	menu_init();
 	joy_init();
+	menu_init();
+	
 	
 }
 
@@ -50,9 +51,21 @@ void play_game(){
 		
 		joy_msg.data[0] = x_pos;
 		joy_msg.length=1;
-		if (DEBUG) { printf(" Sending this message ID: %i, data: %i, length %i\n",joy_msg.ID,joy_msg.data[0],joy_msg.length);}
 		send_CAN_message(joy_msg);
 			
 	}	
  	
+}
+
+
+void draw_game(){
+	menu_print();
+	
+	
+	while (current_node == &draw_node){
+		draw_OLED();
+		
+		_delay_ms(100);
+	}
+	
 }

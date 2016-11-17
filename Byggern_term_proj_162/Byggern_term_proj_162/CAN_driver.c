@@ -59,8 +59,6 @@ CAN_struct rcv_CAN_message(){
 	msg.ID=((read_MCP2515(MCP_RXB0SIDH))<<3|((read_MCP2515(MCP_RXB0SIDL))>>5));
 	msg.length=	(int)(read_MCP2515(MCP_RXB0_DLC) & 0x0f);
 	
-
-	
 	/*READING DATA FROM DATABUFFER*/
 	for (int i=0; i < msg.length; i++){
 		msg.data[i]= read_MCP2515(MCP_RXB0_D0+i);
