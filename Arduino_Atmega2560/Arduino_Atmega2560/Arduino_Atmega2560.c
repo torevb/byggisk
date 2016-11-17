@@ -45,9 +45,13 @@ int main(void)
 		msg =rcv_CAN_message();
 		if (msg.ID==SOLENOIDE_PUSH_ID){
 			push_solenoid();
+			
 		}
 		printf("Received ID: %i\n Received data: %i \n",msg.ID,msg.data[0]);
-		send_motor_speed(msg);
+		if (msg.ID==JOYSTICK_ID){
+			send_motor_speed(msg);
+		}
+		
 		//_delay_ms(6000);
 		//read_encoder_input();
 		
@@ -64,12 +68,6 @@ int main(void)
 	//	printf("Score : %i \n",score_count());
 	//}
 
-	
-	
-	
-	
-	
-	
 	
 	
 	

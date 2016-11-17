@@ -82,7 +82,7 @@ void send_motor_speed(CAN_struct rcv_msg_joy){
 	*/
 	
 	
-	if(rcv_msg_joy.ID==SLIDER_ID){/*SLIDER_data from 0-255*/
+	//if(rcv_msg_joy.ID==SLIDER_ID){/*SLIDER_data from 0-255*/
 		/*Message for TWI format*/
 		int8_t messageBuf[4];
 
@@ -103,13 +103,13 @@ void send_motor_speed(CAN_struct rcv_msg_joy){
 		else{
 		
 			PORTH&=~(1<<DIR);
-			motor_strength= abs(motor_strength-130);// to scale 
+			motor_strength= abs(motor_strength-255);// to scale 
 		}
 		messageBuf[2] =motor_strength;                         // The second byte is used for the data.
 		//printf("Motor strength %i,\n",motor_strength);
 		TWI_Start_Transceiver_With_Data(messageBuf,3);
 	
-	}
+	//}
 }
 
 void set_motor_speed(int16_t input_speed){
