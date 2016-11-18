@@ -15,7 +15,7 @@
 //#define DEBUG 0
 
 
-
+/*
 void game_init(){
 	DDRE=0x3;
 	PORTE=0x2;
@@ -24,7 +24,7 @@ void game_init(){
 	rcv_new_highscore_flag=0;
 	
 	/*Initializing all we need to play the game*/
-	memory_init();
+	/*memory_init();
 	CAN_init();
 	slider_init();	
 	joy_init();
@@ -32,7 +32,7 @@ void game_init(){
 	
 	
 }
-
+/*
 void play_game(){
 	menu_print();
 	
@@ -42,22 +42,24 @@ void play_game(){
 	
 	while(current_node==&ingame_node){
 		/*Need to print new menu if we receive new highscore only*/
-		if(rcv_new_highscore_flag){
-			menu_score(highscore);
-		}
-		joy_relative_pos();
+		//if(rcv_new_highscore_flag){
+			//menu_score(highscore);
+		//}
+		/*joy_relative_pos();
 	
 		int8_t x_pos  = rel_position.x_pos;
-		
+		//printf("halla\n");
 		joy_msg.data[0] = x_pos;
 		joy_msg.length=1;
+		printf("Sending this shit , ID: %i , data : %i\n",joy_msg.ID,joy_msg.data[0]);
 		send_CAN_message(joy_msg);
-			
+
+	/*		
 	}	
  	
-}
+}*/
 
-
+/*
 void draw_game(){
 	menu_print();
 	
@@ -68,4 +70,4 @@ void draw_game(){
 		_delay_ms(100);
 	}
 	
-}
+}*/

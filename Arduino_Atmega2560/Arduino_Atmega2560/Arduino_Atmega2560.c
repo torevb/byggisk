@@ -23,9 +23,6 @@
 
 
 
-void test_pwm_duty();
-
-
 
 int main(void)
 {
@@ -35,47 +32,39 @@ int main(void)
 	CAN_init();
 	motor_init();
 	solenoid_init();
+	pwm_init();
+
 	
-	//printf("HAllo1\n");
-	//calibrate_encoder();
-	
-	
+	int8_t rcv_data= 0;
 	CAN_struct msg;
 	
 	while(1){
 		rcv_CAN_message(&msg);
-		//printf("Received ID: %i\n Received data: %i \n",msg.ID,msg.data[0]);
+		rcv_data=msg.data[0];
+		//printf("Received ID: %i\n Received data: %i \n",msg.ID,rcv_data);
 		if (msg.ID==SOLENOIDE_PUSH_ID){
 			push_solenoid();
 			
 		}
-		if (msg.ID==JOYSTICK_ID){
+		else if (msg.ID==JOYSTICK_ID){
 			int8_t temp_joy= msg.data[0];
-			//printf("tjohey\n");
 			set_motor_dir(temp_joy);
 			uint8_t regulated_speed=speed_regulator(temp_joy, 0.01);
-			//printf("speed %i\n", regulated_speed);
 			send_motor_speed(regulated_speed);
 			
 		}
+		else if(msg.ID==SLIDER_ID){
+			printf("Hey\n");
+			set_pwm_duty_cycle(msg.data[0]);
+		}
 		
-		//printf("time: %i\n", timekeeper);
-		_delay_ms(10);
-		//read_encoder_input();
+		
+
+		
 		
 	}
 
 	
-	//CAN_test();
-	
-	//test_pwm_duty();
-	
-	
-	//int out=255;
-	//while(1){
-	//	printf("Score : %i \n",score_count());
-	//}
-
 	
 	
 	
@@ -85,22 +74,3 @@ int main(void)
 
 
 
-
-
-/*void test_pwm_duty(){
-	pwm_init();
-	CAN_init();
-
-	CAN_struct joyfull;
-	
-	while (1){
-		joyfull = rcv_CAN_message();
-		/*for (int i = 0; i < joyfull.length; i++){
-			int8_t test =  joyfull.data[i];
-			printf("joyfull.data[i]: %i\n", test);
-		}*/
-		/*set_pwm_duty_cycle(joyfull.data[0]);
-		printf("joyfull.data[0]: %x\n", joyfull.data[0]);
-		printf("pwm duty: %i\n", OCR1A);
-	}
-}*/

@@ -6,7 +6,7 @@
 
 typedef struct node{
 	struct node * parent;
-	struct node * children[7];
+	struct node * children[2];
 	char * name;
 	char * content_string;
 }node;
@@ -14,14 +14,9 @@ typedef struct node{
 
 
 node root_node;
-node playgame_node;
-node highscore_node;
-node settings_node;
 node draw_node;
 node ingame_node;
-node calibrate_joy_node;
-node howto_node;
-node info_node;
+
 
 node * current_node;
 

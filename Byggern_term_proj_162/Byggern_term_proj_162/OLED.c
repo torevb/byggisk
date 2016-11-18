@@ -170,7 +170,7 @@ void OLED_print_arrow(uint8_t page)
 	
 	goto_OLED_page(temp);
 }
-
+/*
 void OLED_print_square(uint8_t page,uint8_t column){
 //	int temp_page = current_page;
 //	int temp_column=current_column;
@@ -184,7 +184,8 @@ void OLED_print_square(uint8_t page,uint8_t column){
 //	goto_OLED_page(temp_page);
 }
 
-
+*/
+/*
 void draw_OLED(){
 	
 	goto_next_pixel();
@@ -196,10 +197,10 @@ void draw_OLED(){
 	
 	//get_joy_direction();
 	
-	
+	/*
 	OLED_print_square(current_page, current_column);
-}
-
+}*/
+/*
 void goto_next_pixel(){
 	joy_relative_pos();
 	
@@ -230,7 +231,7 @@ void goto_next_pixel(){
 		y_dir=DOWN;
 		goto_OLED_page(current_page+1);
 	}
-}
+}*/
 
 
 

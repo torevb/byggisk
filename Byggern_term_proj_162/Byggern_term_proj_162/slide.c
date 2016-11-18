@@ -8,8 +8,8 @@
 
 
 #include "slide.h"
-
-
+#define F_CPU 16000000UL  //for <util/delay.h>
+#include <util/delay.h> //for _delay_ms()
 
 
 void slider_init(void){
@@ -27,7 +27,7 @@ int8_t get_slider_pos(ADC_channel adc_ch){
 	//slider_init();
 	volatile char *ext_adc = (char *) 0x1400; // Start address for the ADC
 	*ext_adc	= adc_ch;
-	_delay_us(40);
+	_delay_us(20);
 	int8_t position = *ext_adc;
 	
 	return position;

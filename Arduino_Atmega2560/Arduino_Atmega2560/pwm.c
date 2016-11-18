@@ -5,12 +5,14 @@
 
 
 
-#define TIMER1_PERIOD 1249		//20 ms with prescaler 256. 
+#define TIMER1_PERIOD 1249		//20 ms with prescaler 256.
 #define DUTY_CYCLE_CENTER 94 //(TIMER1_PERIOD*(15/200))	//1,5 ms OF 20 ms. (94)
-#define DUTY_CONVERT_FACTOR 2.8	//An input of +/- 100 gives approximately +/- 37 output
+#define DUTY_CONVERT_FACTOR 3.5	//An input of +- 127 gives approximately +/- 37 output
 #define DUTY_MAX 37
-#define JOY_NEUTRAL 20
-#define JOY_MAX 100
+#define SLIDE_NEUTRAL 20
+#define SLIDE_MAX 255
+#define SLIDE_MIN 0
+#define SLIDE_CENTER (SLIDE_MAX/2)
 
 void pwm_init(){
 	/* Set period to 20 ms. */
@@ -40,35 +42,23 @@ void pwm_init(){
 	TCCR1B |= (1<<CS12);
 }
 
-//void set_pwm_duty_cycle(int8_t input_joy_position){
-	//if ((input_joy_position <= JOY_MAX) && (input_joy_position >= -JOY_MAX)){
-		//OCR1A = DUTY_CYCLE_CENTER - (input_joy_position / DUTY_CONVERT_FACTOR);
-	//}
-	//else if (input_joy_position >= JOY_MAX){
-		//OCR1A = DUTY_CYCLE_CENTER - 37;
-	//}
-	//else if (input_joy_position <= -JOY_MAX){
-		//OCR1A = DUTY_CYCLE_CENTER + 37;
-	//}
-	//else {	//never occurs.
-		//OCR1A = DUTY_CYCLE_CENTER;
-	//}
-//}
 
-void set_pwm_duty_cycle(int8_t input_joy_position){
-	//forslag: stabiliser output til servo. Hopper litt pga små justeringer +/- 2 i joy_position. 
-	printf("Position %i \n", input_joy_position);
-	if (input_joy_position >= JOY_MAX){
+
+void set_pwm_duty_cycle(uint8_t input_slide_pos){
+	//printf("Position %i \n", input_slide_pos);
+	if (input_slide_pos >= SLIDE_MAX){
 		OCR1A = DUTY_CYCLE_CENTER - DUTY_MAX;
 	}
-	else if (input_joy_position <= -JOY_MAX){
+	else if (input_slide_pos <= SLIDE_MIN){
 		OCR1A = DUTY_CYCLE_CENTER + DUTY_MAX;
 	}
-	else if (input_joy_position >= JOY_NEUTRAL){
-		OCR1A = DUTY_CYCLE_CENTER - (input_joy_position / DUTY_CONVERT_FACTOR);
+	else if (input_slide_pos >= SLIDE_CENTER+SLIDE_NEUTRAL){
+		int8_t input_slide_pos_int = input_slide_pos -127;
+		OCR1A = DUTY_CYCLE_CENTER - (input_slide_pos_int / DUTY_CONVERT_FACTOR);
 	}
-	else if (input_joy_position <= -JOY_NEUTRAL){
-		OCR1A = DUTY_CYCLE_CENTER - (input_joy_position / DUTY_CONVERT_FACTOR);
+	else if (input_slide_pos <= SLIDE_CENTER-SLIDE_NEUTRAL){
+		int8_t input_slide_pos_int = input_slide_pos -127;
+		OCR1A = DUTY_CYCLE_CENTER - (input_slide_pos_int / DUTY_CONVERT_FACTOR);
 	}
 	else {
 		OCR1A = DUTY_CYCLE_CENTER;

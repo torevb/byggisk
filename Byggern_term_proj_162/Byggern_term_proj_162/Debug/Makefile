@@ -40,8 +40,6 @@ C_SRCS +=  \
 ../Byggern_term_proj_162.c \
 ../CAN_driver.c \
 ../CAN_test.c \
-../d_latch_test.c \
-../GAL_test.c \
 ../game.c \
 ../joy_ctrl.c \
 ../MCP2515_driver.c \
@@ -52,7 +50,6 @@ C_SRCS +=  \
 ../solenoid.c \
 ../SPI_driver.c \
 ../SRAM.c \
-../SRAM_test.c \
 ../uart.c
 
 
@@ -66,8 +63,6 @@ OBJS +=  \
 Byggern_term_proj_162.o \
 CAN_driver.o \
 CAN_test.o \
-d_latch_test.o \
-GAL_test.o \
 game.o \
 joy_ctrl.o \
 MCP2515_driver.o \
@@ -78,15 +73,12 @@ slide.o \
 solenoid.o \
 SPI_driver.o \
 SRAM.o \
-SRAM_test.o \
 uart.o
 
 OBJS_AS_ARGS +=  \
 Byggern_term_proj_162.o \
 CAN_driver.o \
 CAN_test.o \
-d_latch_test.o \
-GAL_test.o \
 game.o \
 joy_ctrl.o \
 MCP2515_driver.o \
@@ -97,15 +89,12 @@ slide.o \
 solenoid.o \
 SPI_driver.o \
 SRAM.o \
-SRAM_test.o \
 uart.o
 
 C_DEPS +=  \
 Byggern_term_proj_162.d \
 CAN_driver.d \
 CAN_test.d \
-d_latch_test.d \
-GAL_test.d \
 game.d \
 joy_ctrl.d \
 MCP2515_driver.d \
@@ -116,15 +105,12 @@ slide.d \
 solenoid.d \
 SPI_driver.d \
 SRAM.d \
-SRAM_test.d \
 uart.d
 
 C_DEPS_AS_ARGS +=  \
 Byggern_term_proj_162.d \
 CAN_driver.d \
 CAN_test.d \
-d_latch_test.d \
-GAL_test.d \
 game.d \
 joy_ctrl.d \
 MCP2515_driver.d \
@@ -135,7 +121,6 @@ slide.d \
 solenoid.d \
 SPI_driver.d \
 SRAM.d \
-SRAM_test.d \
 uart.d
 
 OUTPUT_FILE_PATH +=Byggern_term_proj_162.elf
@@ -152,12 +137,6 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
-
-
-
-
-
-
 
 
 
