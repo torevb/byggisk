@@ -4,18 +4,14 @@
 #include <stdlib.h>
 #include <avr/io.h>
 
-//#define F_CPU 1000000UL  //for <util/delay.h>
 #include <util/delay.h> //for _delay_ms()
 
 #include "uart.h"
-#include "SRAM_test.h"
-#include "GAL_test.h"
 #include "joy_ctrl.h"
 #include "slide.h"
 #include "OLED.h"
 #include "memory_interface.h"
 #include "menu.h"
-//#include "font.h"
 #include "SPI_driver.h"
 #include "MCP2515_driver.h"
 #include "SRAM.h"
@@ -24,7 +20,7 @@
 #include "CAN_driver.h"
 #include "../../CAN MCP2515 header files/MCP2515.h"
 
-#define SLIDER_TRESHOLD 10
+#define SLIDER_TRESHOLD 5
 #define BAUD 9600
 #define FOSC 4915200
 #define MYUBRR FOSC/16/BAUD-1
@@ -58,6 +54,8 @@ int main(void){
 	
 	int8_t previous_slider_pos=-128;
 	uint8_t current_highscore = 0;
+	uint8_t previous_highscore=0;
+
 	leave_game_flag = 0;
 	
 	send_msg.data[3] = 0;	//highscore value
@@ -69,6 +67,7 @@ int main(void){
 	
 	menu_print();
 	
+
 	
 	while(1){
 		send_msg.data[0] = 0;	//joy_x						<---
@@ -96,16 +95,24 @@ int main(void){
 			}
 			
 			if (rcv_msg.data[3] != 0){		//highscore value
-				current_highscore = rcv_msg.data[3];
+				current_highscore += rcv_msg.data[3];
 				menu_score(current_highscore);
+				previous_highscore=current_highscore;
 			}
 		}
 		else if (leave_game_flag == 1){
 			store_highscore(current_highscore);
+			current_highscore=0;
+			previous_highscore=0;
 			leave_game_flag = 0;
 		}
 		else if (current_node == &highscore_node){
 			menu_highscore();
+		}
+		else if(current_node== &draw_node){
+		
+			draw_OLED();
+			_delay_ms(200);
 		}
 		else{
 			menu_arrow();

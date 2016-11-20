@@ -118,28 +118,7 @@
     <Compile Include="CAN_driver.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="CAN_test.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="CAN_test.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="d_latch_test.c">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="font.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="GAL_test.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="GAL_test.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="game.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="game.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="highscore.c">
@@ -184,12 +163,6 @@
     <Compile Include="slide.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="solenoid.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="solenoid.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="SPI_driver.c">
       <SubType>compile</SubType>
     </Compile>
@@ -200,12 +173,6 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="SRAM.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="SRAM_test.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="SRAM_test.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="uart.c">

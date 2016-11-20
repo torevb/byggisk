@@ -6,14 +6,6 @@ Byggern_term_proj_162.c
 
 CAN_driver.c
 
-CAN_test.c
-
-d_latch_test.c
-
-GAL_test.c
-
-game.c
-
 highscore.c
 
 joy_ctrl.c
@@ -28,13 +20,9 @@ OLED.c
 
 slide.c
 
-solenoid.c
-
 SPI_driver.c
 
 SRAM.c
-
-SRAM_test.c
 
 uart.c
 

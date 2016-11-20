@@ -40,11 +40,9 @@ C_SRCS +=  \
 ../adc.c \
 ../Arduino_Atmega2560.c \
 ../CAN_driver.c \
-../CAN_test.c \
 ../ir_receiver.c \
 ../motor.c \
 ../MCP2515_driver.c \
-../memory_interface.c \
 ../pid.c \
 ../pwm.c \
 ../scoretable.c \
@@ -64,11 +62,9 @@ OBJS +=  \
 adc.o \
 Arduino_Atmega2560.o \
 CAN_driver.o \
-CAN_test.o \
 ir_receiver.o \
 motor.o \
 MCP2515_driver.o \
-memory_interface.o \
 pid.o \
 pwm.o \
 scoretable.o \
@@ -81,11 +77,9 @@ OBJS_AS_ARGS +=  \
 adc.o \
 Arduino_Atmega2560.o \
 CAN_driver.o \
-CAN_test.o \
 ir_receiver.o \
 motor.o \
 MCP2515_driver.o \
-memory_interface.o \
 pid.o \
 pwm.o \
 scoretable.o \
@@ -98,11 +92,9 @@ C_DEPS +=  \
 adc.d \
 Arduino_Atmega2560.d \
 CAN_driver.d \
-CAN_test.d \
 ir_receiver.d \
 motor.d \
 MCP2515_driver.d \
-memory_interface.d \
 pid.d \
 pwm.d \
 scoretable.d \
@@ -115,11 +107,9 @@ C_DEPS_AS_ARGS +=  \
 adc.d \
 Arduino_Atmega2560.d \
 CAN_driver.d \
-CAN_test.d \
 ir_receiver.d \
 motor.d \
 MCP2515_driver.d \
-memory_interface.d \
 pid.d \
 pwm.d \
 scoretable.d \
@@ -142,10 +132,6 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
-
-
-
-
 
 
 

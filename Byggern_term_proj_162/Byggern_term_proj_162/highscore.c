@@ -1,17 +1,15 @@
-//#include "highscore.h"
 
 #include <stdio.h>
 #include <stdint.h>
 
-// #include "menu.h"
 #include "OLED.h"
+#include "highscore.h"
 
 
 #define SCORE_TABLE_SIZE	6
 #define MENU_HIGHSCORE_STRING	7
 
 
-// int score_table[SCORE_TABLE_SIZE];
 uint8_t score_table[SCORE_TABLE_SIZE];
 
 void reset_highscores(){
@@ -31,12 +29,10 @@ void store_highscore(int8_t insert_data){
 		}
 	}
 	for (i=i+1; i<SCORE_TABLE_SIZE; i++){
-		//printf("\tshiftvalue %i", shiftvalue);
 		uint8_t temp = score_table[i];
 		score_table[i] = shiftvalue;
 		shiftvalue = temp;
 	}
-	//printf("\n");
 }
 
 void score_print(){

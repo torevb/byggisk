@@ -1,6 +1,5 @@
 #pragma once
 
-#include "SRAM_test.h"
 #include <avr/io.h>
 
 #define DISPLAY_PAGES		8

@@ -16,13 +16,10 @@
 
 void pwm_init(){
 	/* Set period to 20 ms. */
-	//ICR1H = TIMER1_PERIOD & (0xFFFF << 8);
-	//ICR1L = TIMER1_PERIOD & (0xFFFF << 0);
+
 	ICR1 = TIMER1_PERIOD;
 	
 	/* Initialize duty cycle to 1,5 ms for "neutral" position. */
-	//OCR1AH = DUTY_CYCLE_NEUTRAL & (0xFFFF << 8);
-	//OCR1AL = DUTY_CYCLE_NEUTRAL & (0xFFFF << 0);
 	OCR1A = DUTY_CYCLE_CENTER;
 	
 	/* Set DDRB OC1A as output. */
@@ -42,40 +39,23 @@ void pwm_init(){
 	TCCR1B |= (1<<CS12);
 }
 
-//void set_pwm_duty_cycle(int8_t input_joy_position){
-	//if ((input_joy_position <= JOY_MAX) && (input_joy_position >= -JOY_MAX)){
-		//OCR1A = DUTY_CYCLE_CENTER - (input_joy_position / DUTY_CONVERT_FACTOR);
-	//}
-	//else if (input_joy_position >= JOY_MAX){
-		//OCR1A = DUTY_CYCLE_CENTER - 37;
-	//}
-	//else if (input_joy_position <= -JOY_MAX){
-		//OCR1A = DUTY_CYCLE_CENTER + 37;
-	//}
-	//else {	//never occurs.
-		//OCR1A = DUTY_CYCLE_CENTER;
-	//}
-//}
-
-
-
 
 
 void set_pwm_duty_cycle(uint8_t input_slide_pos){
-	//printf("Position %i \n", input_slide_pos);
+	printf("Position %i \n", input_slide_pos);
 	if (input_slide_pos >= SLIDE_MAX){
-		OCR1A = DUTY_CYCLE_CENTER - DUTY_MAX;
+		OCR1A = DUTY_CYCLE_CENTER + DUTY_MAX;
 	}
 	else if (input_slide_pos <= SLIDE_MIN){
-		OCR1A = DUTY_CYCLE_CENTER + DUTY_MAX;
+		OCR1A = DUTY_CYCLE_CENTER - DUTY_MAX;
 	}
 	else if (input_slide_pos >= SLIDE_CENTER+SLIDE_NEUTRAL){
 		int8_t input_slide_pos_int = input_slide_pos -127;
-		OCR1A = DUTY_CYCLE_CENTER - (input_slide_pos_int / DUTY_CONVERT_FACTOR);
+		OCR1A = DUTY_CYCLE_CENTER + (input_slide_pos_int / DUTY_CONVERT_FACTOR);
 	}
 	else if (input_slide_pos <= SLIDE_CENTER-SLIDE_NEUTRAL){
 		int8_t input_slide_pos_int = input_slide_pos -127;
-		OCR1A = DUTY_CYCLE_CENTER - (input_slide_pos_int / DUTY_CONVERT_FACTOR);
+		OCR1A = DUTY_CYCLE_CENTER + (input_slide_pos_int / DUTY_CONVERT_FACTOR);
 	}
 	else {
 		OCR1A = DUTY_CYCLE_CENTER;

@@ -2,7 +2,6 @@
 
 
 
-#include "SRAM_test.h"
 #include "joy_ctrl.h"
 #include <avr/io.h>
 #include <util/delay.h> //for _delay_ms()

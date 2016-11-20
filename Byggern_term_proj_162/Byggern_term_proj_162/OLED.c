@@ -43,9 +43,6 @@ void OLED_init()
 	write_OLED_cmd(0xaf);        //  display  on
 	
 	
-	//write_OLED_cmd(0xA7);		//Inverse display.
-	//write_OLED_cmd(0xA5);		//Output ignores RAM content. 
-	
 	
 	OLED_reset();
 	set_font4x6();
@@ -147,8 +144,6 @@ void print_to_OLED(const char * string, uint8_t start_column){
 		else{
 			for (int j = 0; j < font_type.width; j++){
 				write_OLED_data(pgm_read_byte(font_type.data + (c - font_type.ascii_offset) * font_type.width +j));
-				//write_OLED_data(pgm_read_byte(&font[c-font_type.ascii_offset][j]));
-				//write_OLED_data(pgm_read_byte(&font_type.data[c-font_type.ascii_offset][j]));
 				current_column = current_column + font_type.width;
 			}
 		}
@@ -172,30 +167,18 @@ void OLED_print_arrow(uint8_t page)
 }
 
 void OLED_print_square(uint8_t page,uint8_t column){
-//	int temp_page = current_page;
-//	int temp_column=current_column;
 	goto_OLED_page(page);
 	goto_OLED_physical_column(column);
 	write_OLED_data(0b11111111);
 	write_OLED_data(0b11111111);
 	write_OLED_data(0b11111111);
 	write_OLED_data(0b11111111);
-//	current_column=temp_column + font_type.width;
-//	goto_OLED_page(temp_page);
 }
 
 
 void draw_OLED(){
 	
 	goto_next_pixel();
-	
-	/*
-	prev_x = prev_x + (rel_position.x_pos % 127);
-	prev_y = prev_y + (rel_position.y_pos % 8);
-	*/
-	
-	//get_joy_direction();
-	
 	
 	OLED_print_square(current_page, current_column);
 }

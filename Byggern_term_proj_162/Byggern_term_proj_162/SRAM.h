@@ -14,10 +14,6 @@
 
 
 
-//typedef unsigned int uint16_t;	//disse er vel inkludert i <stdint.h>?
-//typedef unsigned char uint8_t; 
-
-
 
 void SRAM_init();
 

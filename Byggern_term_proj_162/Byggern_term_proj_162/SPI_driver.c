@@ -4,17 +4,12 @@
 #include "SPI_driver.h"
 
 
-#ifndef ATmega162
-	#define SSn		4
-	#define MOSI	5
-	#define MISO	6
-	#define SCK		7
-#else //uses ATmega 2560
-	#define SSn		0
-	#define MOSI	2
-	#define MISO	3
-	#define SCK		1
-#endif
+
+#define SSn		4
+#define MOSI	5
+#define MISO	6
+#define SCK		7
+
 
 
 void SPI_init(){
@@ -22,7 +17,6 @@ void SPI_init(){
 	DDRB &= ~((1<<MISO));		//Set MISO input.
 	PORTB|=(1<<MISO);
 	SPCR |= (1<<SPE) | (1<<MSTR)|(1<<SPR0);	//Enable SPI, Master, set clock rate fck/16.
-	//PINB &= !(1<<PB4);
 }
 
 

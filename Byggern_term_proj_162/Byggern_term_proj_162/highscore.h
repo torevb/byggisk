@@ -1,6 +1,6 @@
 #pragma once
 
-
+#include <stdint.h>
 void reset_highscores();
 
 void store_highscore(int8_t insert_data);

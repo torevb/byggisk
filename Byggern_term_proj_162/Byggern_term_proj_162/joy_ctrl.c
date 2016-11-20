@@ -1,9 +1,4 @@
-/*
- * CFile2.c
- *
- * Created: 15.09.2016 12:58:30
- *  Author: marthauk
- */ 
+
 #include <util/delay.h> //for _delay_ms()
 #include "joy_ctrl.h"
 #include <stdint.h>
@@ -28,11 +23,9 @@ void joy_init(){
 
 void joy_relative_pos(){
 	int x= get_joy_position(JOY_X);
-	//rel_position.x_pos=(int)(x-null_position.x_pos)*100/127;
 	rel_position.x_pos=(int)(x-null_position.x_pos)*(JOY_MAX-1)/127;
 	
 	int y= get_joy_position(JOY_Y);
-	//rel_position.y_pos=(int)(y-null_position.y_pos)*100/127;
 	rel_position.y_pos=(int)(y-null_position.y_pos)*(JOY_MAX-1)/127;
 }
 
@@ -42,11 +35,9 @@ uint8_t get_joy_position(ADC_channel adc_ch){
 	
 	*ext_adc	= adc_ch;
 	
-	//_delay_us(40);//delay kan justeres ned til 20 mikro, sidan klokka går på 4915200
 	while (PINB & (1<<PINB3)) {	}	//wait for adc interrupt on conversion finish.
 	
 	
-	////connect interruptsignal til pbx. if(PBx=1){}...
 	uint8_t position = *ext_adc;
 	
 	return position;
@@ -89,21 +80,5 @@ int get_joy_direction(){
 		return y_dir;
 	}
 	
-}
-
-int8_t calculate_percentage(int8_t position){
-	int8_t shifted_position = position-(int8_t)0x7F;
-	//int8_t percentage = shifted_position*100/127; 
-	return shifted_position;
-}
-
-
-void print_position(){
-	//printf("null_position: %i, %i. uint_position: %i, %i. \n", null_position.x_pos, null_position.y_pos, get_joy_position(JOY_X), get_joy_position(JOY_Y));
-	printf("joystick position is: x: %i, y: %i\n", rel_position.x_pos, rel_position.y_pos);
-}
-
-void print_direction(){
-	printf("Current direction is %i.\n", get_joy_direction(rel_position.x_pos, rel_position.y_pos));
 }
 

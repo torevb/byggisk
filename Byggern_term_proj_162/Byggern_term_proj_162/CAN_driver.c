@@ -20,7 +20,7 @@ void CAN_init(){
 
 	bit_modify_MCP2515(MCP_CANINTE, 0x05, 0b00000101);//Set RX0 full and TX0 empty enable interrupt
 	
-	//bit_modify_MCP2515(MCP_CANCTRL,0xE0,MODE_LOOPBACK);//Enables loop back mode
+	
 	bit_modify_MCP2515(MCP_CANCTRL,0xE0,MODE_NORMAL);//Enables normal mode
 }
 
@@ -28,9 +28,6 @@ void send_CAN_message(CAN_struct * msg){
 
 	while (read_MCP2515(MCP_TXB0CTRL) & (1<<TXREQ)){//will be cleared when finished
 		if (read_MCP2515(MCP_TXB0CTRL)&(1<<MLOA)){ //Message lost arbitration while being sent, means we have a message from Arduino
-			rcv_new_highscore_flag=1;
-			//rcv_CAN_message();
-			
 			}
 			//wait until finished transmitting
 	}
@@ -69,15 +66,7 @@ void rcv_CAN_message(CAN_struct * msg){
 		msg->data[i]= read_MCP2515(MCP_RXB0_D0+i);
 	}
 	
-	/*
-	if (msg->ID==HIGHSCORE_ID){
-		//Store the highscore somewhere, do something useful.
-		highscore= msg->data[0];
-	}
-	*/
 		
 	//MUST clear RXB0IF after reading message
 	bit_modify_MCP2515(MCP_CANINTF, (1<<RX0IF),0x00);
-	//rcv_new_highscore_flag=0; 
-	//return msg;
 }

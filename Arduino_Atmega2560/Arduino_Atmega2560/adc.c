@@ -22,8 +22,7 @@ void adc_init(){
 	
 	
 	/* Set ADC prescaling. Choose to divide XTAL by 128 */
-	//ADCSRA &= ~((1<<ADPS2) | (1<<ADPS1));	
-	ADCSRA |= /*(1<<ADATE) |*/ (1<<ADPS2) | (1<<ADPS1) | (1<<ADPS0);
+	ADCSRA |=  (1<<ADPS2) | (1<<ADPS1) | (1<<ADPS0);
 	
 
 	
@@ -32,28 +31,16 @@ void adc_init(){
 	
 	
 	
-	
-	
-	
-	/* Enable ADC interrupt. */
-	//ADCSRA |= (1<<ADIE);
-	
 	/* Enable the ADC. */
 	ADCSRA |= (1<<ADEN);
 }
 
-/*
-void start_adc(){
-	ADCSRA |= (1<<ADSC);
-}*/
 
 int adc_done(){
 	return (ADCSRA & (1<<ADIF));
 }
 
 int read_adc_out(){
-	//ADCSRA |= (1<<ADIF);				//Clear interrupt flag. 
-	
 	ADCSRA |= (1<<ADSC);				//Start ADC. First run takes 25 cycles. Others take 13.
 	
 	while ((ADCSRA & (1<<ADSC))) {}		//Wait till conversion is done. 

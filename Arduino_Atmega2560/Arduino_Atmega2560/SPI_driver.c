@@ -16,7 +16,7 @@ void SPI_master_init(){
 	DDRB &= ~((1<<MISO));		//Set MISO input.
 	PORTB|=(1<<MISO);
 	SPCR |= (1<<SPE) | (1<<MSTR)|(1<<SPR1);	//Enable SPI, Master, set clock rate fck/64.
-	//PINB &= !(1<<PB4);
+	
 }
 
 void send_master_SPI(char data){

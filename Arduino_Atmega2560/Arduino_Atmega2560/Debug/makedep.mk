@@ -8,15 +8,11 @@ Arduino_Atmega2560.c
 
 CAN_driver.c
 
-CAN_test.c
-
 ir_receiver.c
 
 motor.c
 
 MCP2515_driver.c
-
-memory_interface.c
 
 pid.c
 

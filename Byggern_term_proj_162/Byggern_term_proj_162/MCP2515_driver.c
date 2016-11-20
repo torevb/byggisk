@@ -18,7 +18,6 @@ char read_MCP2515(char read_address){
 	char val=read_SPI();
 	spi_chipselect_activate();
 	return val;
-	//PORTB |=(1<<SSn);
 }
 
 
@@ -45,9 +44,6 @@ char read_status_MCP2515(){
 	char out = read_SPI();
 	char repeat = read_SPI();
 	spi_chipselect_activate();
-	/*if (out != repeat){
-		return repeat;
-	}*/
 	return out;
 }
 

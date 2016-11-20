@@ -6,9 +6,6 @@
 
 void ir_init(){
 	adc_init();
-	
-	//kalibrer?
-	
 }
 
 /* Read IR LED and say if it's triggered/blocked. */
