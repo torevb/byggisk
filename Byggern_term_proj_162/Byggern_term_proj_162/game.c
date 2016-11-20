@@ -33,7 +33,7 @@ void game_init(){
 	
 }
 
-void play_game(){
+/*void play_game(){
 	menu_print();
 	
 	rcv_new_highscore_flag=0; 
@@ -42,7 +42,7 @@ void play_game(){
 	
 	while(current_node==&ingame_node){
 		/*Need to print new menu if we receive new highscore only*/
-		if(rcv_new_highscore_flag){
+	/*	if(rcv_new_highscore_flag){
 			menu_score(highscore);
 		}
 		joy_relative_pos();
@@ -51,12 +51,12 @@ void play_game(){
 		
 		joy_msg.data[0] = x_pos;
 		joy_msg.length=1;
-		send_CAN_message(joy_msg);
+		//send_CAN_message(joy_msg);
 			
 	}	
  	
 }
-
+*/
 
 void draw_game(){
 	menu_print();

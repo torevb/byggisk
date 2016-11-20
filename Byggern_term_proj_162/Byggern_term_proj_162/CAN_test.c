@@ -24,7 +24,7 @@ void CAN_test(){
 	msg.data[7]='D';
 	
 	while(1){
-		send_CAN_message(msg);
+		//send_CAN_message(msg);
 	}
 	
 	
@@ -39,12 +39,12 @@ void CAN_test_communication(){
 	CAN_init();
 	
 	while (1){
-		CAN_struct rcv_msg= rcv_CAN_message();
-		printf("ID: %i, length: %i\n", rcv_msg.ID, rcv_msg.length);
+		//CAN_struct rcv_msg= rcv_CAN_message();
+		//printf("ID: %i, length: %i\n", rcv_msg.ID, rcv_msg.length);
 		for (int j=0;j<8;j++){//rcv_msg.length;j++){
-			printf("Data in received message : %c at line %i\n", (char) rcv_msg.data[j], j);
+			//printf("Data in received message : %c at line %i\n", (char) rcv_msg.data[j], j);
 		}
-		_delay_ms(1000);
+		//_delay_ms(1000);
 	}
 }
 

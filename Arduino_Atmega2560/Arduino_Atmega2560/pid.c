@@ -57,9 +57,8 @@ uint8_t speed_regulator(int8_t input_joy, float t){
 	uint8_t out = abs(u) / (encoder_max/255);
 	//out = abs(out);
 	//printf("out %i\n", out);
-	if (out > MAX_SPEED){
-		out = out/1.2;
-		//out = NICE_SPEED;
+	if (out > NICE_SPEED){
+		out = NICE_SPEED; //out/1.2;
 	}
 	return out;
 }

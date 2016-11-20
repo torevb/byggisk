@@ -14,18 +14,15 @@ typedef struct node{
 
 
 node root_node;
-node playgame_node;
 node highscore_node;
-node settings_node;
 node draw_node;
 node ingame_node;
-node calibrate_joy_node;
-node howto_node;
-node info_node;
+
 
 node * current_node;
 
 uint8_t highscore;
+uint8_t solenoid_flag;
 
 void menu_init(void);
 

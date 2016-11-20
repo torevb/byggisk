@@ -5,11 +5,9 @@
 #define MLOA 5
 
 /*CAN IDs*/
-#define	HIGHSCORE_ID		0
-#define JOYSTICK_ID			1
-#define SOLENOIDE_PUSH_ID	2
-#define SLIDER_ID			3
-
+#define	NODE1_ID			11
+#define NODE2_ID			22
+#define RCV_ID				3
 
 typedef struct CAN_struct CAN_struct;
 struct CAN_struct{
@@ -19,8 +17,8 @@ struct CAN_struct{
 };
 
 void CAN_init();
-void send_CAN_message(struct CAN_struct msg);
-CAN_struct rcv_CAN_message();
+void send_CAN_message(CAN_struct * msg);
+void rcv_CAN_message(CAN_struct * msg);
 
 
 

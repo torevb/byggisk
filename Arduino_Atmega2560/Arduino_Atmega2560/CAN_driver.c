@@ -23,22 +23,22 @@ void CAN_init(){
 	bit_modify_MCP2515(MCP_CANCTRL,0xF0,MODE_NORMAL);//Enables normal mode
 }
 
-void send_CAN_message(struct CAN_struct msg){
+void send_CAN_message(CAN_struct *msg){
 	while (read_MCP2515(MCP_TXB0CTRL) & (1<<TXREQ)){// & TXREQ){ //will be cleared when finished
 		//wait until finished transmitting
 	}
 
 	//load SIDL
-	write_MCP2515(MCP_TXB0_SIDL, msg.ID << 5);
+	write_MCP2515(MCP_TXB0_SIDL, (*msg).ID << 5);
 	
 	//load SIDH
-	write_MCP2515(MCP_TXB0_SIDH, msg.ID >> 3);
+	write_MCP2515(MCP_TXB0_SIDH, (*msg).ID >> 3);
 
-	write_MCP2515(MCP_TXB0_DLC,(char)msg.length);
+	write_MCP2515(MCP_TXB0_DLC,(char)(*msg).length);
 
 	/*PUTTING DATA IN DATABUFFER*/
-	for (int i=0; i < msg.length; i++){
-		write_MCP2515(MCP_TXB0_D0+i,(char)msg.data[i]);
+	for (int i=0; i < (*msg).length; i++){
+		write_MCP2515(MCP_TXB0_D0+i,(char)(*msg).data[i]);
 	}
 
 	/*REQUEST TO SEND*/
@@ -51,12 +51,11 @@ void rcv_CAN_message(CAN_struct * msg){
 	msg->data[0] = 0;
 	msg->ID = 0;
 	msg->length = 0;
-	
+
 	//memset(&msg, 0, sizeof(CAN_struct));
 	while (!(read_MCP2515(MCP_CANINTF) & (1<<RX0IF))) {} //wait for interrupt
 	
 	msg->ID=((read_MCP2515(MCP_RXB0SIDH))<<3|((read_MCP2515(MCP_RXB0SIDL))>>5));
-	//printf("Message ID in receive-function%i\n", *msg_ID);
 	msg->length=	(int)(read_MCP2515(MCP_RXB0_DLC) & 0x0f);
 	
 	

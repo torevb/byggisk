@@ -27,12 +27,13 @@ void joy_init(){
 }
 
 void joy_relative_pos(){
-	int y= get_joy_position(JOY_Y);
-	//rel_position.y_pos=(int)(y-null_position.y_pos)*100/127;
-	rel_position.y_pos=(int)(y-null_position.y_pos)*(JOY_MAX-1)/127;
 	int x= get_joy_position(JOY_X);
 	//rel_position.x_pos=(int)(x-null_position.x_pos)*100/127;
 	rel_position.x_pos=(int)(x-null_position.x_pos)*(JOY_MAX-1)/127;
+	
+	int y= get_joy_position(JOY_Y);
+	//rel_position.y_pos=(int)(y-null_position.y_pos)*100/127;
+	rel_position.y_pos=(int)(y-null_position.y_pos)*(JOY_MAX-1)/127;
 }
 
 
@@ -40,7 +41,11 @@ uint8_t get_joy_position(ADC_channel adc_ch){
 	volatile char *ext_adc = (char *) 0x1400; // Start address for the ADC
 	
 	*ext_adc	= adc_ch;
-	_delay_us(40);//delay kan justeres ned til 20 mikro, sidan klokka går på 4915200
+	
+	//_delay_us(40);//delay kan justeres ned til 20 mikro, sidan klokka går på 4915200
+	while (PINB & (1<<PINB3)) {	}	//wait for adc interrupt on conversion finish.
+	
+	
 	////connect interruptsignal til pbx. if(PBx=1){}...
 	uint8_t position = *ext_adc;
 	

@@ -24,27 +24,28 @@ void CAN_init(){
 	bit_modify_MCP2515(MCP_CANCTRL,0xE0,MODE_NORMAL);//Enables normal mode
 }
 
-void send_CAN_message(struct CAN_struct msg){
+void send_CAN_message(CAN_struct * msg){
+
 	while (read_MCP2515(MCP_TXB0CTRL) & (1<<TXREQ)){//will be cleared when finished
 		if (read_MCP2515(MCP_TXB0CTRL)&(1<<MLOA)){ //Message lost arbitration while being sent, means we have a message from Arduino
 			rcv_new_highscore_flag=1;
-			rcv_CAN_message();
+			//rcv_CAN_message();
 			
 			}
 			//wait until finished transmitting
 	}
-
+	
 	//load SIDL
-	write_MCP2515(MCP_TXB0_SIDL, msg.ID << 5);
+	write_MCP2515(MCP_TXB0_SIDL, (*msg).ID << 5);
 	
 	//load SIDH
-	write_MCP2515(MCP_TXB0_SIDH, msg.ID >> 3);
+	write_MCP2515(MCP_TXB0_SIDH, (*msg).ID >> 3);
 
-	write_MCP2515(MCP_TXB0_DLC,(char)msg.length);
+	write_MCP2515(MCP_TXB0_DLC,(char)(*msg).length);
 
 	/*PUTTING DATA IN DATABUFFER*/
-	for (int i=0; i < msg.length; i++){
-		write_MCP2515(MCP_TXB0_D0+i,(char)msg.data[i]);
+	for (int i=0; i < (*msg).length; i++){
+		write_MCP2515(MCP_TXB0_D0+i,(char)(*msg).data[i]);
 	}
 
 	/*REQUEST TO SEND*/
@@ -52,24 +53,31 @@ void send_CAN_message(struct CAN_struct msg){
 }
 
 
-CAN_struct rcv_CAN_message(){
-	CAN_struct msg;
+void rcv_CAN_message(CAN_struct * msg){
+	
+	msg->data[0] = 0;
+	msg->ID = 0;
+	msg->length = 0;
 	
 	while (!(read_MCP2515(MCP_CANINTF) & (1<<RX0IF))) {} //wait for interrupt
-	msg.ID=((read_MCP2515(MCP_RXB0SIDH))<<3|((read_MCP2515(MCP_RXB0SIDL))>>5));
-	msg.length=	(int)(read_MCP2515(MCP_RXB0_DLC) & 0x0f);
+	
+	msg->ID=((read_MCP2515(MCP_RXB0SIDH))<<3|((read_MCP2515(MCP_RXB0SIDL))>>5));
+	msg->length=	(int)(read_MCP2515(MCP_RXB0_DLC) & 0x0f);
 	
 	/*READING DATA FROM DATABUFFER*/
-	for (int i=0; i < msg.length; i++){
-		msg.data[i]= read_MCP2515(MCP_RXB0_D0+i);
+	for (int i=0; i < msg->length; i++){
+		msg->data[i]= read_MCP2515(MCP_RXB0_D0+i);
 	}
-	if (msg.ID==HIGHSCORE_ID){
-		/*Store the highscore somewhere, do something useful. */
-		highscore= msg.data[0];
+	
+	/*
+	if (msg->ID==HIGHSCORE_ID){
+		//Store the highscore somewhere, do something useful.
+		highscore= msg->data[0];
 	}
+	*/
 		
 	//MUST clear RXB0IF after reading message
 	bit_modify_MCP2515(MCP_CANINTF, (1<<RX0IF),0x00);
-	rcv_new_highscore_flag=0; 
-	return msg;
+	//rcv_new_highscore_flag=0; 
+	//return msg;
 }

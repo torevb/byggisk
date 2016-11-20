@@ -27,7 +27,11 @@ int8_t get_slider_pos(ADC_channel adc_ch){
 	//slider_init();
 	volatile char *ext_adc = (char *) 0x1400; // Start address for the ADC
 	*ext_adc	= adc_ch;
-	_delay_us(40);
+	
+	//_delay_us(40);
+	while (PINB & (1<<PINB3)) {	}	//wait for adc interrupt on conversion finish.
+		
+		
 	int8_t position = *ext_adc;
 	
 	return position;
