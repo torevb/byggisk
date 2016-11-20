@@ -14,6 +14,8 @@ GAL_test.c
 
 game.c
 
+highscore.c
+
 joy_ctrl.c
 
 MCP2515_driver.c

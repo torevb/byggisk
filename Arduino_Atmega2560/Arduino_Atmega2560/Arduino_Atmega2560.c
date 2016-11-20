@@ -23,12 +23,6 @@
 
 
 
-
-
-//void test_pwm_duty();
-
-
-
 int main(void){
 	UART_Init(MYUBRR);		
 	printf("Atmega2560 start.\n");
@@ -84,6 +78,8 @@ int main(void){
 		}
 		
 		send_msg.data[3] = score_count();
+		printf("Scorecount %i",send_msg.data[3]);
+		
 		
 		send_CAN_message(& send_msg);
 		
@@ -92,25 +88,3 @@ int main(void){
 	return 0;
 }
 
-
-
-
-
-
-/*void test_pwm_duty(){
-	pwm_init();
-	CAN_init();
-
-	CAN_struct joyfull;
-	
-	while (1){
-		joyfull = rcv_CAN_message();
-		/*for (int i = 0; i < joyfull.length; i++){
-			int8_t test =  joyfull.data[i];
-			printf("joyfull.data[i]: %i\n", test);
-		}*/
-		/*set_pwm_duty_cycle(joyfull.data[0]);
-		printf("joyfull.data[0]: %x\n", joyfull.data[0]);
-		printf("pwm duty: %i\n", OCR1A);
-	}
-}*/

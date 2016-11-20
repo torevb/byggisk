@@ -19,6 +19,7 @@
 #include "SPI_driver.h"
 #include "MCP2515_driver.h"
 #include "SRAM.h"
+#include "highscore.h"
 
 #include "CAN_driver.h"
 #include "../../CAN MCP2515 header files/MCP2515.h"
@@ -43,7 +44,7 @@ int main(void){
 	CAN_init();
 	slider_init();
 	joy_init();
-	
+	reset_highscores();
 	menu_init();
 	
 	CAN_struct send_msg;
@@ -56,12 +57,17 @@ int main(void){
 	
 	
 	int8_t previous_slider_pos=-128;
+	uint8_t current_highscore = 0;
+	leave_game_flag = 0;
 	
 	send_msg.data[3] = 0;	//highscore value
 	
 	rcv_msg.data[0] = 0;	//joy_x
 	rcv_msg.data[1] = 0;	//slider_left
 	rcv_msg.data[2] = 0;	//button_left / interrupt
+	
+	
+	menu_print();
 	
 	
 	while(1){
@@ -72,8 +78,8 @@ int main(void){
 		joy_relative_pos();
 		
 		if (current_node==&ingame_node){
-			int8_t joy_x_temp = rel_position.x_pos;
-			send_msg.data[0] = joy_x_temp;
+			int8_t current_joy_x = rel_position.x_pos;
+			send_msg.data[0] = current_joy_x;
 			
 			int8_t current_slide_pos = get_slider_pos(SLIDE_L);
 			if((current_slide_pos>=previous_slider_pos+SLIDER_TRESHOLD)||(current_slide_pos<=previous_slider_pos-SLIDER_TRESHOLD)){
@@ -84,20 +90,26 @@ int main(void){
 			}
 			send_msg.data[1] = current_slide_pos;
 			
-			if(solenoid_flag == 1){
+			if(solenoid_flag == 1){ /* detected button push->send data*/
 				send_msg.data[2] = 1;
 				solenoid_flag = 0;
 			}
 			
 			if (rcv_msg.data[3] != 0){		//highscore value
-				//printf("CAN highscore data\n");
-				uint8_t temp_highscore = 115;//rcv_msg.data[3];
-				menu_score(temp_highscore);
+				current_highscore = rcv_msg.data[3];
+				menu_score(current_highscore);
 			}
+		}
+		else if (leave_game_flag == 1){
+			store_highscore(current_highscore);
+			leave_game_flag = 0;
+		}
+		else if (current_node == &highscore_node){
+			menu_highscore();
 		}
 		else{
 			menu_arrow();
-			_delay_ms(100);
+			_delay_ms(400);
 		}	
 		
 		send_CAN_message(&send_msg);
@@ -105,6 +117,7 @@ int main(void){
 		rcv_msg.data[3] = 0;	//highscore value			<---
 		
 		rcv_CAN_message(& rcv_msg);
+		
 	}
 	return 0;
 }

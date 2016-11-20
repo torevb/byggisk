@@ -6,7 +6,7 @@
 
 typedef struct node{
 	struct node * parent;
-	struct node * children[7];
+	struct node * children[3];
 	char * name;
 	char * content_string;
 }node;
@@ -23,6 +23,7 @@ node * current_node;
 
 uint8_t highscore;
 uint8_t solenoid_flag;
+uint8_t leave_game_flag;
 
 void menu_init(void);
 

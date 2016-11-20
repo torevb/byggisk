@@ -43,6 +43,7 @@ C_SRCS +=  \
 ../d_latch_test.c \
 ../GAL_test.c \
 ../game.c \
+../highscore.c \
 ../joy_ctrl.c \
 ../MCP2515_driver.c \
 ../memory_interface.c \
@@ -69,6 +70,7 @@ CAN_test.o \
 d_latch_test.o \
 GAL_test.o \
 game.o \
+highscore.o \
 joy_ctrl.o \
 MCP2515_driver.o \
 memory_interface.o \
@@ -88,6 +90,7 @@ CAN_test.o \
 d_latch_test.o \
 GAL_test.o \
 game.o \
+highscore.o \
 joy_ctrl.o \
 MCP2515_driver.o \
 memory_interface.o \
@@ -107,6 +110,7 @@ CAN_test.d \
 d_latch_test.d \
 GAL_test.d \
 game.d \
+highscore.d \
 joy_ctrl.d \
 MCP2515_driver.d \
 memory_interface.d \
@@ -126,6 +130,7 @@ CAN_test.d \
 d_latch_test.d \
 GAL_test.d \
 game.d \
+highscore.d \
 joy_ctrl.d \
 MCP2515_driver.d \
 memory_interface.d \
@@ -152,6 +157,8 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+
+
 
 
 

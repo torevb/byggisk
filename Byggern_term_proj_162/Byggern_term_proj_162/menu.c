@@ -22,34 +22,34 @@ void menu_init(){
 	
 	root_node.name = "        > Main menu < \n";
 	root_node.parent = &root_node;
-	for (int i=0; i<7;i++){ root_node.children[i] = NULL; }
+	for (int i=0; i<3;i++){ root_node.children[i] = NULL; }
 	root_node.children[0] = &ingame_node;
 	root_node.children[1] = &highscore_node;
-	root_node.children[3] = &draw_node;
-	root_node.content_string = "Play Ping-Pong game \nHighscores \nSettings \nDraw a doodle \nInfo \n";
+	root_node.children[2] = &draw_node;
+	root_node.content_string = "Play Ping-Pong game \nHighscores \nDraw a doodle \n";
 
 	highscore_node.name = "Back     > Highscore < \n";
 	highscore_node.parent = &root_node;
-	for (int i=0; i<7;i++){ highscore_node.children[i] = NULL; }
-	highscore_node.content_string = "Player1 score. \nPlayer2 score. \n";
+	for (int i=0; i<3;i++){ highscore_node.children[i] = NULL; }
+	highscore_node.content_string = " ";
 
 
 	
 	draw_node.name = "         > Drawing board < \n";
 	draw_node.parent = &root_node;
-	for (int i=0; i<7;i++){ draw_node.children[i] = NULL; }
+	for (int i=0; i<3;i++){ draw_node.children[i] = NULL; }
 	//draw_node.content_string = draw_OLED();
 	
 	
 	ingame_node.name = "         > In-game < \n";
 	ingame_node.parent = &root_node;
-	for (int i=0; i<7;i++){ ingame_node.children[i] = NULL; }
+	for (int i=0; i<3;i++){ ingame_node.children[i] = NULL; }
 	ingame_node.content_string = "\nCurrent score: \n";
 	
 	
 	
-	//current_node = &root_node; 
-	current_node =&ingame_node;////&playgame_node;//&info_node;
+	current_node = &root_node; 
+	//current_node =&ingame_node;////&playgame_node;//&info_node;
 	arrow_page = 0;
 }
 
@@ -94,6 +94,9 @@ ISR(INT0_vect){//, INT1_vect){
 		}
 		arrow_page = 0;
 		menu_print();
+		if (current_node == &ingame_node){
+			menu_score(0);
+		}
 	}
 	
 }
@@ -101,6 +104,9 @@ ISR(INT0_vect){//, INT1_vect){
 /*Used for going backwards/upwards in menu*/
 ISR(INT1_vect){
 	//printf("Button interrupt.\n");
+	if (current_node == &ingame_node){
+		leave_game_flag = 1;
+	}
 	current_node = current_node->parent;
 	menu_print();
 }

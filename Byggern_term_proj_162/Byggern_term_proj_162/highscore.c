@@ -20,7 +20,7 @@ void reset_highscores(){
 	}
 }
 
-void store_data(int8_t insert_data){
+void store_highscore(int8_t insert_data){
 	int i = 0;
 	uint8_t shiftvalue = 0;
 	for (i=0; i<SCORE_TABLE_SIZE; i++){
@@ -45,45 +45,14 @@ void score_print(){
 	}
 }
 
-void print_to_OLED(char * inputstring, int offset){
-	for (int i=0; i<offset; i++){
-		printf(" ");
-	}
-	printf(inputstring);
-}
 
 void menu_highscore(){
+	OLED_reset();
+	goto_OLED_page(0);
 	char string_print[MENU_HIGHSCORE_STRING];
-	//print_to_OLED("Back     > Highscore < \n", 2);
+	print_to_OLED("Back     > Highscore < \n", 2);
 	for (int i=0; i<SCORE_TABLE_SIZE; i++){
 		sprintf(string_print, "%i\n", score_table[i]);
 		print_to_OLED(string_print, 2);
 	}
 }
-
-
-int main(){
-	reset_highscores();
-	// score_print();
-	
-	store_data(10);
-	store_data(9);
-	store_data(11);
-	store_data(54);
-	store_data(2);
-	store_data(2);
-	store_data(7);
-	store_data(72);
-	store_data(72);
-	store_data(72);
-	//score_print();
-	
-	menu_highscore();
-	
-	
-	return 0;
-}
-
-
-
-
