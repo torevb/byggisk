@@ -27,7 +27,7 @@ int main(void){
 	printf("Atmega2560 start.\n");
 	
 	CAN_init();
-	motor_init();
+	motor_init();		//obs: calls can_init twice.
 	pwm_init();
 	solenoid_init();
 	ir_init();
@@ -48,6 +48,8 @@ int main(void){
 	rcv_msg.data[3] = 0;	//highscore value
 	
 	while(1){
+		printf("alive\n");
+		
 		send_msg.data[3] = 0;	//highscore value			<---
 		
 		rcv_msg.data[0] = 0;	//joy_x						<---
@@ -59,7 +61,8 @@ int main(void){
 		if (rcv_msg.data[0] != 0){		//joy_x
 			int8_t temp_joy_x= rcv_msg.data[0];
 			set_motor_dir(temp_joy_x);
-			uint8_t regulated_speed=speed_regulator(temp_joy_x, 0.01);
+			//uint8_t regulated_speed=speed_regulator(temp_joy_x, 0.01);
+			uint8_t regulated_speed=abs(temp_joy_x);	if (regulated_speed < 10){ regulated_speed = 0; }
 			send_motor_speed(regulated_speed);
 		}
 		
@@ -69,7 +72,7 @@ int main(void){
 		}
 		
 		if (rcv_msg.data[2] != 0){		//button_left / interrupt
-			printf("CAN button data\n");
+			//printf("CAN button data\n");
 			push_solenoid();
 		}
 		

@@ -3,7 +3,7 @@
 #include <stdint.h>
 
 
-#define Kp	-0.1//-1.15
+#define Kp	-0.2//-1.15
 #define Ki	-0.005
 #define Kd	-0.001
 

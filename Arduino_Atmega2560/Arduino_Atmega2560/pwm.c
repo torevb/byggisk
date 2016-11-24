@@ -42,7 +42,7 @@ void pwm_init(){
 
 
 void set_pwm_duty_cycle(uint8_t input_slide_pos){
-	printf("Position %i \n", input_slide_pos);
+	//printf("Position %i \n", input_slide_pos);
 	if (input_slide_pos >= SLIDE_MAX){
 		OCR1A = DUTY_CYCLE_CENTER + DUTY_MAX;
 	}

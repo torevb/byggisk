@@ -14,7 +14,6 @@ int triggered_ir(){
 	if (out){
 		return 0;
 	}
-	//TODO Create trigger area somewhere. This is "digital filter".
 	
 	
 	return 1;

@@ -70,6 +70,8 @@ int main(void){
 
 	
 	while(1){
+		printf("alive\n");
+		
 		send_msg.data[0] = 0;	//joy_x						<---
 		send_msg.data[1] = 0;	//slider_left				<---
 		send_msg.data[2] = 0;	//button_left / interrupt	<---
@@ -79,6 +81,7 @@ int main(void){
 		if (current_node==&ingame_node){
 			int8_t current_joy_x = rel_position.x_pos;
 			send_msg.data[0] = current_joy_x;
+			//printf("joy_x %i\n", current_joy_x);
 			
 			int8_t current_slide_pos = get_slider_pos(SLIDE_L);
 			if((current_slide_pos>=previous_slider_pos+SLIDER_TRESHOLD)||(current_slide_pos<=previous_slider_pos-SLIDER_TRESHOLD)){
@@ -108,6 +111,7 @@ int main(void){
 		}
 		else if (current_node == &highscore_node){
 			menu_highscore();
+			_delay_ms(400);
 		}
 		else if(current_node== &draw_node){
 		
